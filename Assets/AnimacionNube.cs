@@ -2,25 +2,26 @@ using UnityEngine;
 
 public class MoverNube : MonoBehaviour
 {
-    public float velocidad = 20f;
-    public float limiteDerecho = 1000f;
-    public float posicionInicialX = -1000f;
+    [Tooltip("Qué tan rápido oscila la nube (0.5 es un buen punto de partida)")]
+    public float frecuencia = 0.5f;
 
-    RectTransform rectTransform;
+    [Tooltip("Qué tan lejos se mueve a cada lado desde su origen")]
+    public float distancia = 50f;
+
+    private Vector2 posicionInicial;
+    private RectTransform rectTransform;
 
     void Start()
     {
         rectTransform = GetComponent<RectTransform>();
+        posicionInicial = rectTransform.anchoredPosition;
     }
 
     void Update()
     {
-        rectTransform.anchoredPosition += Vector2.right * velocidad * Time.deltaTime;
+        // La frecuencia controla la velocidad del ciclo (el vaivén)
+        float movimiento = Mathf.Sin(Time.time * frecuencia) * distancia;
 
-        if (rectTransform.anchoredPosition.x > limiteDerecho)
-        {
-            rectTransform.anchoredPosition =
-                new Vector2(posicionInicialX, rectTransform.anchoredPosition.y);
-        }
+        rectTransform.anchoredPosition = new Vector2(posicionInicial.x + movimiento, rectTransform.anchoredPosition.y);
     }
 }
