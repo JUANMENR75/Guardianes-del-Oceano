@@ -1,27 +1,42 @@
 using UnityEngine;
 
-public class MoverNube : MonoBehaviour
+public class MovimientoNubes : MonoBehaviour
 {
-    [Tooltip("Qué tan rápido oscila la nube (0.5 es un buen punto de partida)")]
-    public float frecuencia = 0.5f;
+    [Header("ConfiguraciÃ³n de Movimiento")]
+    [Tooltip("Velocidad de movimiento de la nube en pÃ­xeles por segundo.")]
+    public float velocidad = 30f; 
 
-    [Tooltip("Qué tan lejos se mueve a cada lado desde su origen")]
-    public float distancia = 50f;
+    [Tooltip("Margen extra en pÃ­xeles para que la nube salga por completo de la pantalla antes de reaparecer.")]
+    public float margenSalida = 250f; 
 
-    private Vector2 posicionInicial;
     private RectTransform rectTransform;
+    private Canvas canvasPadre;
 
     void Start()
     {
         rectTransform = GetComponent<RectTransform>();
-        posicionInicial = rectTransform.anchoredPosition;
+        canvasPadre = GetComponentInParent<Canvas>();
+
+        if (canvasPadre == null)
+        {
+            Debug.LogError("Â¡Ojo! El objeto de la nube debe estar dentro de un Canvas.");
+        }
     }
 
     void Update()
     {
-        // La frecuencia controla la velocidad del ciclo (el vaivén)
-        float movimiento = Mathf.Sin(Time.time * frecuencia) * distancia;
+        if (canvasPadre == null) return;
 
-        rectTransform.anchoredPosition = new Vector2(posicionInicial.x + movimiento, rectTransform.anchoredPosition.y);
+        rectTransform.anchoredPosition += Vector2.right * velocidad * Time.deltaTime;
+
+        float anchoCanvas = canvasPadre.GetComponent<RectTransform>().rect.width;
+
+        float limiteDerecho = (anchoCanvas / 2f) + margenSalida;
+        float limiteIzquierdo = -(anchoCanvas / 2f) - margenSalida;
+
+        if (rectTransform.anchoredPosition.x > limiteDerecho)
+        {
+            rectTransform.anchoredPosition = new Vector2(limiteIzquierdo, rectTransform.anchoredPosition.y);
+        }
     }
 }
