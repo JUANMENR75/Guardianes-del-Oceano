@@ -11,6 +11,14 @@ public class GestorPuntuacion : MonoBehaviour
     private int contBasura = 0;
     private float distancia = 0;
 
+    void Start()
+    {
+        // Aseguramos que los contadores inicien en 0 visualmente
+        if (numeroMonedas != null) numeroMonedas.text = "0";
+        if (numeroBasura != null) numeroBasura.text = "0";
+        if (numeroDistancia != null) numeroDistancia.text = "0";
+    }
+
     public void SumarMoneda()
     {
         contMonedas++;

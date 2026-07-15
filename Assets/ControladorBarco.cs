@@ -2,59 +2,58 @@ using UnityEngine;
 
 public class ControladorBarco : MonoBehaviour
 {
-    [Header("Configuración del Teclado")]
-    public float velocidadMovimiento = 300f;
-    public float limiteSuperior = 200f;
-    public float limiteInferior = -200f;
+    [Header("Configuración de Movimiento")]
+    public float velocidadMovimiento = 5f;
+    public float limiteSuperior = -0.8f; // Ajustado a tus valores reales de escena
+    public float limiteInferior = -7f;
 
-    [Header("Efecto de Flotar de las Olas")]
-    public float amplitudVertical = 15f;
-    public float velocidadVertical = 1.5f;
-    public float amplitudRotacion = 5f;
-    public float velocidadRotacion = 1.2f;
+    [Header("Efecto de Flotar")]
+    public float amplitudVertical = 0.3f;
+    public float velocidadVertical = 2f;
+    public float amplitudRotacion = 2f;
+    public float velocidadRotacion = 1f;
 
-    private RectTransform rectTransform;
     private float posicionBaseY;
 
     void Start()
     {
-        rectTransform = GetComponent<RectTransform>();
-        posicionBaseY = rectTransform.anchoredPosition.y;
+        posicionBaseY = transform.position.y;
     }
 
     void Update()
     {
+        // Movimiento Vertical controlado por el jugador
         float inputY = Input.GetAxisRaw("Vertical");
 
-        if (inputY != 0)
-        {
-            posicionBaseY += inputY * velocidadMovimiento * Time.deltaTime;
-            posicionBaseY = Mathf.Clamp(posicionBaseY, limiteInferior, limiteSuperior);
-        }
+        // Aplicamos el movimiento solo si hay entrada
+        posicionBaseY += inputY * velocidadMovimiento * Time.deltaTime;
 
+        // Mantenemos la posición dentro de los límites
+        posicionBaseY = Mathf.Clamp(posicionBaseY, limiteInferior, limiteSuperior);
+
+        // Efectos de Flotación (calculados sobre la base)
         float flotarY = Mathf.Sin(Time.time * velocidadVertical) * amplitudVertical;
         float rotacionZ = Mathf.Sin(Time.time * velocidadRotacion) * amplitudRotacion;
 
-        rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, posicionBaseY + flotarY);
-        rectTransform.rotation = Quaternion.Euler(0, 0, rotacionZ);
+        // Aplicar transformación final
+        transform.position = new Vector3(transform.position.x, posicionBaseY + flotarY, 0);
+        transform.rotation = Quaternion.Euler(0, 0, rotacionZ);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Esto imprimirá en la consola con qué objeto está chocando el bote
-        Debug.Log("Chocaste con: " + collision.tag);
-
+        // Esta línea ahora sí encontrará a tu GestorPuntuacion
         GestorPuntuacion gestor = Object.FindAnyObjectByType<GestorPuntuacion>();
 
-        if (collision.CompareTag("Basura"))
+        if (collision.CompareTag("Moneda"))
         {
-            if (gestor != null) gestor.SumarBasura();
+            if (gestor != null) gestor.SumarMoneda(); // Ahora esto funcionará
             Destroy(collision.gameObject);
         }
-        else if (collision.CompareTag("Moneda"))
+        else if (collision.CompareTag("Basura"))
         {
-            if (gestor != null) gestor.SumarMoneda();
+            if (gestor != null) gestor.SumarBasura(); // Ahora esto funcionará
             Destroy(collision.gameObject);
         }
     }
-} 
+}

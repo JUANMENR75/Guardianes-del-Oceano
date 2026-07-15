@@ -1,21 +1,20 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class FondoInfinito : MonoBehaviour
 {
-    public float velocidad = 0.05f;
-    private RawImage rawImage;
+    public float velocidad = 0.1f;
+    private Material mat;
 
     void Start()
     {
-        rawImage = GetComponent<RawImage>();
+        // Obtenemos el material del Renderer
+        mat = GetComponent<Renderer>().material;
     }
 
     void Update()
     {
-        if (rawImage != null)
-        {
-            rawImage.uvRect = new Rect(rawImage.uvRect.x + velocidad * Time.deltaTime, 0, rawImage.uvRect.width, rawImage.uvRect.height);
-        }
+        // Desplazamos el offset de la textura principal (_MainTex es el nombre estándar del shader)
+        float offset = Time.time * velocidad;
+        mat.SetTextureOffset("_MainTex", new Vector2(offset, 0));
     }
 }
