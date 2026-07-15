@@ -2,63 +2,57 @@ using UnityEngine;
 
 public class ControladorBarco : MonoBehaviour
 {
-    [Header("Configuración del Teclado")]
-    public float velocidadMovimiento = 300f;
-    public float limiteSuperior = 200f;
-    public float limiteInferior = -200f;
+    [Header("Configuración de Movimiento")]
+    public float velocidadMovimiento = 5f;
+    public float limiteSuperior = -0.8f; // Ajustado a tus valores reales de escena
+    public float limiteInferior = -7f;
 
-    [Header("Efecto de Flotar de las Olas")]
-    public float amplitudVertical = 15f; // Ajustado para Canvas (UI)
-    public float velocidadVertical = 1.5f;
-    public float amplitudRotacion = 5f;
-    public float velocidadRotacion = 1.2f;
+    [Header("Efecto de Flotar")]
+    public float amplitudVertical = 0.3f;
+    public float velocidadVertical = 2f;
+    public float amplitudRotacion = 2f;
+    public float velocidadRotacion = 1f;
 
-    private RectTransform rectTransform;
     private float posicionBaseY;
-    private int puntaje = 0;
 
     void Start()
     {
-        rectTransform = GetComponent<RectTransform>();
-        // Guardamos la posición Y en la que empieza el barco
-        posicionBaseY = rectTransform.anchoredPosition.y;
+        posicionBaseY = transform.position.y;
     }
 
     void Update()
     {
-        // 1. CONTROL CON EL TECLADO (Flechas o W/S)
+        // Movimiento Vertical controlado por el jugador
         float inputY = Input.GetAxisRaw("Vertical");
 
-        if (inputY != 0)
-        {
-            // Modificamos la posición base hacia donde el jugador quiere ir
-            posicionBaseY += inputY * velocidadMovimiento * Time.deltaTime;
-            // Evitamos que se salga de los límites del mar
-            posicionBaseY = Mathf.Clamp(posicionBaseY, limiteInferior, limiteSuperior);
-        }
+        // Aplicamos el movimiento solo si hay entrada
+        posicionBaseY += inputY * velocidadMovimiento * Time.deltaTime;
 
-        // 2. EFECTO AUTOMÁTICO DE FLOTAR (Seno matemático)
+        // Mantenemos la posición dentro de los límites
+        posicionBaseY = Mathf.Clamp(posicionBaseY, limiteInferior, limiteSuperior);
+
+        // Efectos de Flotación (calculados sobre la base)
         float flotarY = Mathf.Sin(Time.time * velocidadVertical) * amplitudVertical;
         float rotacionZ = Mathf.Sin(Time.time * velocidadRotacion) * amplitudRotacion;
 
-        // 3. APLICAR TODO AL RECTRANSFORM
-        // Sumamos la posición que quiere el jugador + el pequeño sube y baja automático del agua
-        rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, posicionBaseY + flotarY);
-        rectTransform.rotation = Quaternion.Euler(0, 0, rotacionZ);
+        // Aplicar transformación final
+        transform.position = new Vector3(transform.position.x, posicionBaseY + flotarY, 0);
+        transform.rotation = Quaternion.Euler(0, 0, rotacionZ);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Basura"))
+        // Esta línea ahora sí encontrará a tu GestorPuntuacion
+        GestorPuntuacion gestor = Object.FindAnyObjectByType<GestorPuntuacion>();
+
+        if (collision.CompareTag("Moneda"))
         {
-            puntaje += 10;
-            Debug.Log("¡Basura limpia! Puntaje: " + puntaje);
+            if (gestor != null) gestor.SumarMoneda(); // Ahora esto funcionará
             Destroy(collision.gameObject);
         }
-        else if (collision.CompareTag("Moneda"))
+        else if (collision.CompareTag("Basura"))
         {
-            puntaje += 50;
-            Debug.Log("¡Moneda recogida! Puntaje: " + puntaje);
+            if (gestor != null) gestor.SumarBasura(); // Ahora esto funcionará
             Destroy(collision.gameObject);
         }
     }
