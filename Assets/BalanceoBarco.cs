@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class BalanceoDecorativo : MonoBehaviour
 {
-    public float velocidad = 1.5f; // Ritmo del balanceo
-    public float anguloInclinacion = 5f; // Qué tanto se inclina (grados)
+    public float velocidad = 1f; // Ritmo del balanceo
+    public float anguloInclinacion = 0f; // Qué tanto se inclina (grados)
 
     private RectTransform rectTransform;
 

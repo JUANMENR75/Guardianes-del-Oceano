@@ -889,7 +889,8 @@ MonoBehaviour:
   prefabs:
   - {fileID: 1891493215449600545, guid: a7be465c0044f8547806094bb9fb4b5b, type: 3}
   - {fileID: 1900443493924768959, guid: a800a6acf5ba1f1428e605b9ec00cdbf, type: 3}
-  tiempoEntreGeneracion: 2
+  tiempoMinimo: 3
+  tiempoMaximo: 10
 --- !u!4 &1087164505
 Transform:
   m_ObjectHideFlags: 0
@@ -899,7 +900,7 @@ Transform:
   m_GameObject: {fileID: 1087164503}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.14463, y: -3.84359, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1007,11 +1008,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ControladorBarco
   velocidadMovimiento: 5
   limiteSuperior: -0.8
-  limiteInferior: -7
-  amplitudVertical: 0.3
-  velocidadVertical: 2
-  amplitudRotacion: 2
-  velocidadRotacion: 1
+  limiteInferior: -7.8
+  amplitudRotacion: 6.58
+  velocidadRotacion: 2
 --- !u!61 &1108151901
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1046,7 +1045,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.80505157, y: -0.86864614}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1056,7 +1055,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 19.2, y: 10.67}
+  m_Size: {x: 5.6987004, y: 2.5018444}
   m_EdgeRadius: 0
 --- !u!50 &1108151902
 Rigidbody2D:
@@ -1153,8 +1152,8 @@ Transform:
   m_GameObject: {fileID: 1108151899}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.5, y: -7, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalPosition: {x: -6.17, y: -7.73, z: 0}
+  m_LocalScale: {x: 0.25815, y: 0.23793155, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

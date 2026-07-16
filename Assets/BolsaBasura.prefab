@@ -151,4 +151,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7267fbfc237c80429023e5baacdbca9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjetoFlotante
-  velocidad: 0.2
+  velocidad: 0.9

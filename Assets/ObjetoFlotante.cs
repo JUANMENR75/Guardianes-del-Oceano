@@ -1,14 +1,14 @@
-using UnityEngine; // Esto es obligatorio
+using UnityEngine;
 
-public class ObjetoFlotante : MonoBehaviour // "ObjetoFlotante" debe coincidir con el nombre del archivo
+public class ObjetoFlotante : MonoBehaviour
 {
-    public float velocidad = 0.2f;
+    public float velocidad = 7.5f; // Aumentamos la velocidad para que se dispersen rápido
 
     void Update()
     {
         transform.Translate(Vector3.left * velocidad * Time.deltaTime);
 
-        if (transform.position.x < -10f)
+        if (transform.position.x < -12f)
         {
             Destroy(gameObject);
         }
