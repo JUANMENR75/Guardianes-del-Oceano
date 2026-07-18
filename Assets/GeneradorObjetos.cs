@@ -4,16 +4,17 @@ public class GeneradorObjetos : MonoBehaviour
 {
     public GameObject[] prefabs;
 
-    // Estos valores son mucho más altos para obligar a que haya espacio
-    public float tiempoMinimo = 3.0f;
-    public float tiempoMaximo = 10.0f;
+    [Header("Configuración de Tiempo")]
+    public float tiempoMinimo = 1.0f; // Más rápido
+    public float tiempoMaximo = 2.0f; // Más rápido
 
     private float contador;
     private float tiempoSiguienteGeneracion;
+    private int ultimoIndice = -1; // Para evitar repetir el mismo objeto siempre
 
     void Start()
     {
-        tiempoSiguienteGeneracion = 2.0f;
+        tiempoSiguienteGeneracion = 1.0f;
     }
 
     void Update()
@@ -22,19 +23,31 @@ public class GeneradorObjetos : MonoBehaviour
 
         if (contador >= tiempoSiguienteGeneracion)
         {
-            // Rango de altura más restringido (Y) 
-            // -2.0f es la altura del barco, -0.5f es debajo de los marcadores
-            float yAleatorio = Random.Range(-7.5f, -0.5f);
-
-            // X=14 los hace aparecer más lejos fuera de pantalla
-            Vector3 posicionSpawn = new Vector3(14f, yAleatorio, 0f);
-
-            int indice = Random.Range(0, prefabs.Length);
-            Instantiate(prefabs[indice], posicionSpawn, Quaternion.identity);
-
+            GenerarObjeto();
             contador = 0;
-            // Nueva espera larga
-            tiempoSiguienteGeneracion = Random.Range(tiempoMinimo, tiempoMaximo);
+
+            // Calculamos el próximo tiempo
+            float factorDificultad = 1.0f / ControladorDificultad.multiplicadorVelocidad;
+            tiempoSiguienteGeneracion = Random.Range(tiempoMinimo * factorDificultad, tiempoMaximo * factorDificultad);
         }
+    }
+
+    void GenerarObjeto()
+    {
+        // 1. Elegir un índice que no sea el mismo que el anterior
+        int nuevoIndice;
+        do
+        {
+            nuevoIndice = Random.Range(0, prefabs.Length);
+        } while (nuevoIndice == ultimoIndice && prefabs.Length > 1);
+
+        ultimoIndice = nuevoIndice;
+
+        // 2. Generar posición
+        float yAleatorio = Random.Range(-7.5f, -0.5f);
+        Vector3 posicionSpawn = new Vector3(14f, yAleatorio, 0f);
+
+        // 3. Crear el objeto
+        Instantiate(prefabs[nuevoIndice], posicionSpawn, Quaternion.identity);
     }
 }

@@ -13,15 +13,22 @@ public class ControladorBarco : MonoBehaviour
     [Header("Configuración de Balanceo (Ajustable)")]
     [Tooltip("Qué tanto se inclina el barco (0 = recto)")]
     public float amplitudRotacion = 6.58f;
-
     [Tooltip("Qué tan rápido se inclina")]
     public float velocidadRotacion = 2f;
 
     private float posicionBaseY;
 
+    // Referencia al script de puntuación
+    private GestorPuntuacion gestorPuntuacion;
+
+    // --- NUEVA VARIABLE ---
+    [Header("Gestión de Fin de Juego")]
+    public GestorGameOver gestorGameOver;
+
     void Start()
     {
         posicionBaseY = transform.position.y;
+        gestorPuntuacion = FindAnyObjectByType<GestorPuntuacion>();
     }
 
     void Update()
@@ -41,17 +48,26 @@ public class ControladorBarco : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GestorPuntuacion gestor = Object.FindAnyObjectByType<GestorPuntuacion>();
+        if (gestorPuntuacion == null) return;
 
         if (collision.CompareTag("Moneda"))
         {
-            if (gestor != null) gestor.SumarMoneda();
+            gestorPuntuacion.SumarMoneda();
             Destroy(collision.gameObject);
         }
         else if (collision.CompareTag("Basura"))
         {
-            if (gestor != null) gestor.SumarBasura();
+            gestorPuntuacion.SumarBasura();
             Destroy(collision.gameObject);
+        }
+        else if (collision.CompareTag("Bomba"))
+        {
+            // --- CÓDIGO CORREGIDO ---
+            // Ya no se reinicia la escena, ahora activamos el Game Over
+            if (gestorGameOver != null)
+            {
+                gestorGameOver.ActivarGameOver();
+            }
         }
     }
 }

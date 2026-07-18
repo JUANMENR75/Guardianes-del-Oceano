@@ -2,15 +2,12 @@ using UnityEngine;
 
 public class ObjetoFlotante : MonoBehaviour
 {
-    public float velocidad = 7.5f; // Aumentamos la velocidad para que se dispersen rápido
+    public float velocidadBase = 5f;
 
     void Update()
     {
-        transform.Translate(Vector3.left * velocidad * Time.deltaTime);
-
-        if (transform.position.x < -12f)
-        {
-            Destroy(gameObject);
-        }
+        // Se mueve a la izquierda multiplicando por el factor de dificultad global
+        float velocidadActual = velocidadBase * ControladorDificultad.multiplicadorVelocidad;
+        transform.Translate(Vector3.left * velocidadActual * Time.deltaTime);
     }
 }

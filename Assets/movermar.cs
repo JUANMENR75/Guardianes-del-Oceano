@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MoverMar : MonoBehaviour
 {
-    public float velocidad = 50f;
+    public float velocidad = 100f;
     public float ancho = 950f;
 
     private RectTransform rect;
