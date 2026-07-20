@@ -7,4 +7,9 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("Escena");
     }
+
+    public void IrAHerramientas()
+    {
+        SceneManager.LoadScene("Escena 2");
+    }
 }

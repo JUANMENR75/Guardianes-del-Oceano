@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1849230042027635326}
   - component: {fileID: 239237520248937026}
   - component: {fileID: 313922023241785053}
+  - component: {fileID: -1054024027101390360}
   m_Layer: 0
   m_Name: Sabritas
   m_TagString: Basura
@@ -152,3 +153,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjetoFlotante
   velocidadBase: 5
+--- !u!114 &-1054024027101390360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6266735190426682116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1eeb976362fffa46aaa84072da1d108, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimadorObjetos
+  tipoObjeto: 1

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 760175221797141742}
   - component: {fileID: 3234033170685316303}
   - component: {fileID: 6169565173183927879}
+  - component: {fileID: 4401622232497852449}
   m_Layer: 0
   m_Name: lata
   m_TagString: Basura
@@ -152,3 +153,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjetoFlotante
   velocidadBase: 5
+--- !u!114 &4401622232497852449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4048563854778654598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1eeb976362fffa46aaa84072da1d108, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimadorObjetos
+  tipoObjeto: 1
