@@ -27,10 +27,16 @@ public class GestorGameOver : MonoBehaviour
 
     public void ReiniciarJuego()
     {
-        Debug.Log("Reiniciando juego..."); // Esto te ayudará a ver en la consola si el botón se presiona
+        Debug.Log("Reiniciando juego...");
         Time.timeScale = 1; // ¡Esto es clave! Devuelve el tiempo a la normalidad
 
         // Cargamos la escena actual
-        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void IrAlMenuPrincipal()
+    {
+        Time.timeScale = 1; // Reanudamos el tiempo antes de salir
+        SceneManager.LoadScene("MenuPrincipal"); // Cambia "MenuPrincipal" por el nombre exacto de tu escena
     }
 }

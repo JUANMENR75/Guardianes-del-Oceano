@@ -12,4 +12,9 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("Escena 2");
     }
+
+    public void IrAlMenuPrincipal()
+    {
+        SceneManager.LoadScene("MenuPrincipal"); // Cambia "MenuPrincipal" por el nombre exacto de tu escena de menú inicial
+    }
 }
