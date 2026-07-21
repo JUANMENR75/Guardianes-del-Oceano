@@ -62,7 +62,6 @@ public class ControladorBarco : MonoBehaviour
         }
         else if (collision.CompareTag("Bomba"))
         {
-            // --- CÓDIGO CORREGIDO ---
             // Ya no se reinicia la escena, ahora activamos el Game Over
             if (gestorGameOver != null)
             {
