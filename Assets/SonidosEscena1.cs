@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class SonidosEscena1 : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class SonidosEscena1 : MonoBehaviour
 
     [Header("Efectos de Sonido (SFX)")]
     public AudioSource efectosAudioSource;
+    public AudioSource audioGameOverSource;
     public AudioClip clipMoneda;
     public AudioClip clipBasura;
     public AudioClip clipExplosionBomba;
@@ -65,19 +67,34 @@ public class SonidosEscena1 : MonoBehaviour
         if (juegoTerminado) return;
         juegoTerminado = true;
 
+        // Apagamos los sonidos ambientales de inmediato
         if (audioMar != null) audioMar.Stop();
         if (audioBarco != null) audioBarco.Stop();
 
-        if (efectosAudioSource != null)
+        // 1. La bomba suena al natural y de forma instantánea
+        if (efectosAudioSource != null && clipExplosionBomba != null)
         {
-            if (clipExplosionBomba != null) efectosAudioSource.PlayOneShot(clipExplosionBomba);
-            if (clipGameOver != null) efectosAudioSource.PlayOneShot(clipGameOver);
+            efectosAudioSource.PlayOneShot(clipExplosionBomba);
+        }
+
+        // 2. Damos un respiro corto de 0.4 segundos para que la bomba inicie perfecta antes del Game Over
+        StartCoroutine(EsperarYSonarGameOver());
+    }
+
+    IEnumerator EsperarYSonarGameOver()
+    {
+        yield return new WaitForSecondsRealtime(0.4f);
+
+        AudioSource sourceAGuiar = audioGameOverSource != null ? audioGameOverSource : efectosAudioSource;
+
+        if (sourceAGuiar != null && clipGameOver != null)
+        {
+            sourceAGuiar.PlayOneShot(clipGameOver);
         }
     }
 
     public void ReproducirClicYReiniciar(string nombreEscenaJuego)
     {
-        // Restablecemos el tiempo por si estaba pausado o congelado
         Time.timeScale = 1f;
 
         if (efectosAudioSource != null && clipClicBoton != null)
@@ -85,13 +102,11 @@ public class SonidosEscena1 : MonoBehaviour
             efectosAudioSource.PlayOneShot(clipClicBoton);
         }
 
-        // Cargamos la escena directamente
         SceneManager.LoadScene(nombreEscenaJuego);
     }
 
     public void ReproducirClicYIrAlMenu(string nombreEscenaMenu)
     {
-        // Restablecemos el tiempo por si estaba pausado o congelado
         Time.timeScale = 1f;
 
         if (efectosAudioSource != null && clipClicBoton != null)
@@ -99,7 +114,6 @@ public class SonidosEscena1 : MonoBehaviour
             efectosAudioSource.PlayOneShot(clipClicBoton);
         }
 
-        // Cargamos la escena asegurando el nombre exacto ("MenuPrincipal")
         SceneManager.LoadScene(nombreEscenaMenu);
     }
 }

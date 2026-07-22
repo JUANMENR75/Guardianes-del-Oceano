@@ -2454,7 +2454,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SonidosMenuPrincipal
   efectosAudioSource: {fileID: 1723659742}
   clipClicBoton: {fileID: 8300000, guid: 39c3cc3e038177840bb8ccd4056a66eb, type: 3}
-  audioMusicaFondo: {fileID: 0}
+  audioMusicaFondo: {fileID: 1723659742}
   audioMar: {fileID: 1723659740}
   audioGaviotas: {fileID: 1723659739}
   audioBarco: {fileID: 1723659738}
@@ -2471,7 +2471,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 16cdb0e24f5a889469fa8f4a049ca587, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.15
+  m_Volume: 0.175
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -2568,7 +2568,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 8e0304a0ae3814b45ad3f52ecaf9584f, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.18
+  m_Volume: 0.071
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -2665,7 +2665,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: f675aee39bc5fd54eaa4e7b7905f54ac, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.55
+  m_Volume: 1
   m_Pitch: -0.17
   Loop: 1
   Mute: 0
@@ -2857,9 +2857,9 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 3f0718ef19d04c0409bc5c1af3db20ed, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.12
   m_Pitch: 1
   Loop: 0
   Mute: 0
