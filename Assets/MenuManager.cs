@@ -5,7 +5,7 @@ public class MenuManager : MonoBehaviour
 {
     public void IrAlJuego()
     {
-        SceneManager.LoadScene("Escena");
+        SceneManager.LoadScene("Escena 1");
     }
 
     public void IrAHerramientas()
