@@ -21,7 +21,6 @@ public class ControladorBarco : MonoBehaviour
     // Referencia al script de puntuación
     private GestorPuntuacion gestorPuntuacion;
 
-    // --- NUEVA VARIABLE ---
     [Header("Gestión de Fin de Juego")]
     public GestorGameOver gestorGameOver;
 
@@ -53,15 +52,35 @@ public class ControladorBarco : MonoBehaviour
         if (collision.CompareTag("Moneda"))
         {
             gestorPuntuacion.SumarMoneda();
+
+            // --- NUEVO: Reproducir sonido de moneda ---
+            if (SonidosEscena1.instance != null)
+            {
+                SonidosEscena1.instance.ReproducirSonidoMoneda();
+            }
+
             Destroy(collision.gameObject);
         }
         else if (collision.CompareTag("Basura"))
         {
             gestorPuntuacion.SumarBasura();
+
+            // --- NUEVO: Reproducir sonido de basura ---
+            if (SonidosEscena1.instance != null)
+            {
+                SonidosEscena1.instance.ReproducirSonidoBasura();
+            }
+
             Destroy(collision.gameObject);
         }
         else if (collision.CompareTag("Bomba"))
         {
+            // --- NUEVO: Reproducir sonido de explosión y Game Over ---
+            if (SonidosEscena1.instance != null)
+            {
+                SonidosEscena1.instance.TriggerGameOver();
+            }
+
             // Ya no se reinicia la escena, ahora activamos el Game Over
             if (gestorGameOver != null)
             {
