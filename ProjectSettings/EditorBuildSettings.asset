@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Escena 2.unity
     guid: ec994307840f0bc4388dd6f6c413b565
+  - enabled: 1
+    path: Assets/Escena 3.unity
+    guid: e25e8c7739ddfb44395eca35ec9cce22
   m_configObjects: {}
