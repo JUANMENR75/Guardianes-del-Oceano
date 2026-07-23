@@ -439,8 +439,9 @@ GameObject:
   - component: {fileID: 152569547}
   - component: {fileID: 152569549}
   - component: {fileID: 152569548}
+  - component: {fileID: 152569550}
   m_Layer: 5
-  m_Name: Bote
+  m_Name: BoteTurbo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -503,6 +504,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 152569546}
   m_CullTransparentMesh: 1
+--- !u!114 &152569550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152569546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e996e05dc32cb4ea87527a7a4df148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimacionHerramientas
 --- !u!1 &199556133
 GameObject:
   m_ObjectHideFlags: 0
@@ -1681,6 +1694,7 @@ GameObject:
   - component: {fileID: 859482698}
   - component: {fileID: 859482700}
   - component: {fileID: 859482699}
+  - component: {fileID: 859482701}
   m_Layer: 5
   m_Name: Red
   m_TagString: Untagged
@@ -1745,6 +1759,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 859482697}
   m_CullTransparentMesh: 1
+--- !u!114 &859482701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 859482697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e996e05dc32cb4ea87527a7a4df148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimacionHerramientas
 --- !u!1 &889129253
 GameObject:
   m_ObjectHideFlags: 0
@@ -1756,8 +1782,9 @@ GameObject:
   - component: {fileID: 889129254}
   - component: {fileID: 889129256}
   - component: {fileID: 889129255}
+  - component: {fileID: 889129257}
   m_Layer: 5
-  m_Name: Bote
+  m_Name: Contenedor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1820,6 +1847,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 889129253}
   m_CullTransparentMesh: 1
+--- !u!114 &889129257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 889129253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e996e05dc32cb4ea87527a7a4df148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimacionHerramientas
 --- !u!1 &1018698100
 GameObject:
   m_ObjectHideFlags: 0
@@ -2402,6 +2441,7 @@ GameObject:
   - component: {fileID: 1180622134}
   - component: {fileID: 1180622136}
   - component: {fileID: 1180622135}
+  - component: {fileID: 1180622137}
   m_Layer: 5
   m_Name: Iman
   m_TagString: Untagged
@@ -2466,6 +2506,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1180622133}
   m_CullTransparentMesh: 1
+--- !u!114 &1180622137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180622133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e996e05dc32cb4ea87527a7a4df148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimacionHerramientas
 --- !u!1 &1261336608
 GameObject:
   m_ObjectHideFlags: 0
@@ -2835,6 +2887,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1368020923}
+        m_TargetAssemblyTypeName: SonidosMenuPrincipal, Assembly-CSharp
+        m_MethodName: ReproducirSonidoClic
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1271376051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2848,7 +2912,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.007849097, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.08520043, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3222,6 +3286,154 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1362183255}
   m_CullTransparentMesh: 1
+--- !u!1 &1368020922
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1368020925}
+  - component: {fileID: 1368020924}
+  - component: {fileID: 1368020923}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1368020923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368020922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72954092cf62040498b8c78a96b0ad79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SonidosMenuPrincipal
+  efectosAudioSource: {fileID: 1368020924}
+  clipClicBoton: {fileID: 8300000, guid: 39c3cc3e038177840bb8ccd4056a66eb, type: 3}
+  audioMusicaFondo: {fileID: 0}
+  audioMar: {fileID: 0}
+  audioGaviotas: {fileID: 0}
+  audioBarco: {fileID: 0}
+--- !u!82 &1368020924
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368020922}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 0.11
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &1368020925
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368020922}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 502.40836, y: 359.83096, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1519002372
 GameObject:
   m_ObjectHideFlags: 0
@@ -3719,6 +3931,7 @@ GameObject:
   - component: {fileID: 1679798869}
   - component: {fileID: 1679798871}
   - component: {fileID: 1679798870}
+  - component: {fileID: 1679798872}
   m_Layer: 5
   m_Name: Anzuelo
   m_TagString: Untagged
@@ -3783,6 +3996,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1679798868}
   m_CullTransparentMesh: 1
+--- !u!114 &1679798872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679798868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e996e05dc32cb4ea87527a7a4df148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimacionHerramientas
 --- !u!1 &1693378010
 GameObject:
   m_ObjectHideFlags: 0
@@ -3869,6 +4094,7 @@ GameObject:
   - component: {fileID: 1696630073}
   - component: {fileID: 1696630075}
   - component: {fileID: 1696630074}
+  - component: {fileID: 1696630076}
   m_Layer: 5
   m_Name: Escudo
   m_TagString: Untagged
@@ -3933,6 +4159,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1696630072}
   m_CullTransparentMesh: 1
+--- !u!114 &1696630076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696630072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e996e05dc32cb4ea87527a7a4df148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimacionHerramientas
 --- !u!1 &1710958484
 GameObject:
   m_ObjectHideFlags: 0
@@ -4218,6 +4456,7 @@ GameObject:
   - component: {fileID: 1761839963}
   - component: {fileID: 1761839965}
   - component: {fileID: 1761839964}
+  - component: {fileID: 1761839966}
   m_Layer: 5
   m_Name: Frasco
   m_TagString: Untagged
@@ -4282,6 +4521,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1761839962}
   m_CullTransparentMesh: 1
+--- !u!114 &1761839966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761839962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e996e05dc32cb4ea87527a7a4df148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimacionHerramientas
 --- !u!1 &1784569793
 GameObject:
   m_ObjectHideFlags: 0
@@ -4293,6 +4544,7 @@ GameObject:
   - component: {fileID: 1784569794}
   - component: {fileID: 1784569796}
   - component: {fileID: 1784569795}
+  - component: {fileID: 1784569797}
   m_Layer: 5
   m_Name: Radar
   m_TagString: Untagged
@@ -4357,6 +4609,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1784569793}
   m_CullTransparentMesh: 1
+--- !u!114 &1784569797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784569793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e996e05dc32cb4ea87527a7a4df148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimacionHerramientas
 --- !u!1 &1792860095
 GameObject:
   m_ObjectHideFlags: 0
@@ -5078,6 +5342,7 @@ GameObject:
   - component: {fileID: 2092176873}
   - component: {fileID: 2092176875}
   - component: {fileID: 2092176874}
+  - component: {fileID: 2092176876}
   m_Layer: 5
   m_Name: Tortuga
   m_TagString: Untagged
@@ -5142,6 +5407,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2092176872}
   m_CullTransparentMesh: 1
+--- !u!114 &2092176876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092176872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e996e05dc32cb4ea87527a7a4df148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimacionHerramientas
 --- !u!1 &2096412528
 GameObject:
   m_ObjectHideFlags: 0
@@ -5365,6 +5642,7 @@ GameObject:
   - component: {fileID: 2107145739}
   - component: {fileID: 2107145741}
   - component: {fileID: 2107145740}
+  - component: {fileID: 2107145742}
   m_Layer: 5
   m_Name: Linterna
   m_TagString: Untagged
@@ -5429,6 +5707,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2107145738}
   m_CullTransparentMesh: 1
+--- !u!114 &2107145742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107145738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e996e05dc32cb4ea87527a7a4df148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimacionHerramientas
 --- !u!1 &2129900888
 GameObject:
   m_ObjectHideFlags: 0
@@ -5663,3 +5953,4 @@ SceneRoots:
   - {fileID: 2069435315}
   - {fileID: 1167060898}
   - {fileID: 620243791}
+  - {fileID: 1368020925}
