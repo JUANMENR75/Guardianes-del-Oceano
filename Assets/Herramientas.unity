@@ -253,8 +253,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Detecta basura escondida
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
+  m_sharedMaterial: {fileID: -6740865061598433582, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -575,8 +575,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Atrae objetos met\xE1licos"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
+  m_sharedMaterial: {fileID: -6740865061598433582, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -712,8 +712,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Radar
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
+  m_sharedMaterial: {fileID: -6740865061598433582, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -924,8 +924,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Rescatador de fauna
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
+  m_sharedMaterial: {fileID: -6740865061598433582, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1255,8 +1255,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Te protege de obst\xE1culos "
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
+  m_sharedMaterial: {fileID: -6740865061598433582, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1393,8 +1393,8 @@ MonoBehaviour:
   m_text: "USA LAS HERRAMIENTAS PARA LIMPIAR EL OC\xC9ANO Y PROTEGER A LOS ANIMALES
     MARINOS"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9e978cfb971c5443f9065b5a03dfe7ba, type: 2}
+  m_sharedMaterial: {fileID: -2442876818670401055, guid: 9e978cfb971c5443f9065b5a03dfe7ba, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1605,8 +1605,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Ilumina zonas oscuras
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
+  m_sharedMaterial: {fileID: -6740865061598433582, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2010,8 +2010,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Aumenta la velocidad por unos segundos
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
+  m_sharedMaterial: {fileID: -6740865061598433582, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2147,8 +2147,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Linterna
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
+  m_sharedMaterial: {fileID: -6740865061598433582, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2284,8 +2284,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Im\xE1n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
+  m_sharedMaterial: {fileID: -6740865061598433582, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2577,8 +2577,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: HERRAMIENTAS
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bda58424ae0f84b7f8c16241c9f946a2, type: 2}
+  m_sharedMaterial: {fileID: 5285800950805602128, guid: bda58424ae0f84b7f8c16241c9f946a2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2641,7 +2641,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -123.53522, w: 0}
+  m_margin: {x: -12.168884, y: 0, z: -123.53522, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2714,8 +2714,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Limpia zonas acuaticas contaminadas '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
+  m_sharedMaterial: {fileID: -6740865061598433582, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2996,8 +2996,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Libera animales atrapados
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
+  m_sharedMaterial: {fileID: -6740865061598433582, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3133,8 +3133,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Escudo\t"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
+  m_sharedMaterial: {fileID: -6740865061598433582, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3493,8 +3493,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Purificador de agua
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
+  m_sharedMaterial: {fileID: -6740865061598433582, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3630,8 +3630,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Contenedor
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
+  m_sharedMaterial: {fileID: -6740865061598433582, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3767,8 +3767,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Gancho
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
+  m_sharedMaterial: {fileID: -6740865061598433582, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4230,8 +4230,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Clasifica Residuos
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
+  m_sharedMaterial: {fileID: -6740865061598433582, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4367,8 +4367,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Red
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
+  m_sharedMaterial: {fileID: -6740865061598433582, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4755,8 +4755,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Turbo
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
+  m_sharedMaterial: {fileID: -6740865061598433582, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4967,8 +4967,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Recupera objetos pesados
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
+  m_sharedMaterial: {fileID: -6740865061598433582, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5553,8 +5553,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Recoge basura flotante
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
+  m_sharedMaterial: {fileID: -6740865061598433582, guid: fa342c1beb6464648a49c08ecb643703, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
