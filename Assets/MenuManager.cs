@@ -13,10 +13,10 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene("Herramientas");
     }
 
-    // Agrega esta nueva función para los escenarios
+    
     public void IrAEscenarios()
     {
-        SceneManager.LoadScene("Escenarios"); // Asegúrate de que tu escena se llame exactamente así
+        SceneManager.LoadScene("Escenarios"); 
     }
 
     public void IrAlMenuPrincipal()
