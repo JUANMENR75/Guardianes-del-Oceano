@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7650057607061264530}
   - component: {fileID: 5311720209538385061}
   - component: {fileID: 8280298468697357457}
+  - component: {fileID: -8564726825821919218}
   m_Layer: 0
   m_Name: "Pi\xF1a"
   m_TagString: Untagged
@@ -138,3 +139,16 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 3.88, y: 5.41}
   m_EdgeRadius: 0
+--- !u!114 &-8564726825821919218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7431302561383184641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f6c0d5180e9d142b722f99109df211, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoBasura
+  tipoBasura: "Org\xE1nico"

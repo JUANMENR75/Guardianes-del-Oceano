@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1930304441782314885}
   - component: {fileID: 1733915776041210151}
   - component: {fileID: 8750786251876990495}
+  - component: {fileID: -3483241320378013948}
   m_Layer: 0
   m_Name: CajaCarton
   m_TagString: Untagged
@@ -138,3 +139,16 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 5.36, y: 7.61}
   m_EdgeRadius: 0
+--- !u!114 &-3483241320378013948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9149277467984030990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f6c0d5180e9d142b722f99109df211, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoBasura
+  tipoBasura: "Inorg\xE1nico"
