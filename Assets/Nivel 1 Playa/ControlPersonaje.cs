@@ -12,6 +12,12 @@ public class ControlPersonaje : MonoBehaviour
     public Sprite spritePinza;    // Imagen con la pinza estirada
     private SpriteRenderer spriteRenderer;
 
+    [Header("Límites de la Arena")]
+    public float minX = -7.8f;
+    public float maxX = 7f;
+    public float minY = -2.8f;
+    public float maxY = 2f;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -51,10 +57,16 @@ public class ControlPersonaje : MonoBehaviour
 
     void FixedUpdate()
     {
-        // 3. Mover físicamente al personaje por la pantalla
+        // 3. Mover físicamente al personaje respetando los límites de la arena
         if (rb != null)
         {
-            rb.MovePosition(rb.position + movimiento * velocidad * Time.fixedDeltaTime);
+            Vector2 nuevaPosicion = rb.position + movimiento * velocidad * Time.fixedDeltaTime;
+
+            // Restringir la posición dentro de los valores permitidos
+            nuevaPosicion.x = Mathf.Clamp(nuevaPosicion.x, minX, maxX);
+            nuevaPosicion.y = Mathf.Clamp(nuevaPosicion.y, minY, maxY);
+
+            rb.MovePosition(nuevaPosicion);
         }
     }
 
