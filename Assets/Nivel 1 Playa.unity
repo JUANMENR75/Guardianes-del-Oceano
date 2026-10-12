@@ -3269,7 +3269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3eee3e485414ae498a6d80825f3199a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovimientoPersonaje
-  velocidad: 5
+  velocidad: 3
 --- !u!1 &1324887896
 GameObject:
   m_ObjectHideFlags: 0
