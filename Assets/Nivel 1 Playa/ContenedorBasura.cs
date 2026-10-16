@@ -6,83 +6,76 @@ public class ContenedorBasura : MonoBehaviour
     [Header("Configuración del Contenedor")]
     public string tipoBasuraAceptada; // "Orgánico", "Inorgánico", "NoReciclable"
 
-    [Header("Nombres de las Barras en el Canvas")]
-    public string nombreBarraBasura = "BarraAzul";
-    public string nombreBarraPuntos = "BarraNaranja";
-
-    private static Image barraBasuraImg;
-    private static Image barraPuntosImg;
-
+    // Contadores globales compartidos para el juego y el Game Over
     public static int totalBasuraReciclada = 0;
     public static int totalPuntos = 0;
 
-    //  TOTAL piezas para que las barras se llenen mucho más despacio y de forma gradual
-    private float piezasMaximasParaLlenar = 50f;
+    // Referencias globales estáticas para las barras actualizadas
+    private static Image barraBasuraGlobal;
+    private static Image barraPuntosGlobal;
+
+    // 10 piezas máximo para que la barra se llene al 100% y se note rápido con cada pieza
+    private static float piezasMaximasParaLlenar = 10f;
 
     void Start()
     {
         totalBasuraReciclada = 0;
         totalPuntos = 0;
 
-        GameObject objBasura = GameObject.Find(nombreBarraBasura);
-        if (objBasura != null)
-        {
-            barraBasuraImg = objBasura.GetComponent<Image>();
-            barraBasuraImg.fillAmount = 0f;
-        }
+        // Búsqueda automática con los NUEVOS nombres exactos que pusiste en el Canvas
+        GameObject objBasura = GameObject.Find("BarraAzulBasura");
+        if (objBasura != null) barraBasuraGlobal = objBasura.GetComponent<Image>();
 
-        GameObject objPuntos = GameObject.Find(nombreBarraPuntos);
-        if (objPuntos != null)
+        GameObject objPuntos = GameObject.Find("BarraNaranjaPuntos");
+        if (objPuntos != null) barraPuntosGlobal = objPuntos.GetComponent<Image>();
+
+        ActualizarBarraVisualDirecta();
+    }
+
+    public void RecibirBasura(ObjetoBasura basura)
+    {
+        if (basura == null) return;
+
+        string basuraLimpia = LimpiarTexto(basura.tipoBasura);
+        string contenedorLimpio = LimpiarTexto(tipoBasuraAceptada);
+
+        if (basuraLimpia == contenedorLimpio)
         {
-            barraPuntosImg = objPuntos.GetComponent<Image>();
-            barraPuntosImg.fillAmount = 0f;
+            // Sumamos los totales
+            totalBasuraReciclada++;
+            totalPuntos += 10; // 10 puntos por cada pieza correcta
+
+            basura.DepositerEnContenedorLocal(); // Destruye la basura recolectada
+            ActualizarBarraVisualDirecta();       // Actualiza las barras visuales al instante en tiempo real
+
+            Debug.Log($"¡Depósito correcto! Basura: {totalBasuraReciclada} | Puntos: {totalPuntos}");
+        }
+        else
+        {
+            Debug.Log("¡Contenedor incorrecto!");
         }
     }
 
-    void OnTriggerStay2D(Collider2D collision)
+    public static void ActualizarBarraVisualDirecta()
     {
-        if ((collision.CompareTag("Player") || collision.gameObject.name == "PuntoPinza") && Input.GetKey(KeyCode.Space))
+        // Actualiza la barra azul de basura en tiempo real
+        if (barraBasuraGlobal != null)
         {
-            ObjetoBasura[] todasBasuras = FindObjectsByType<ObjetoBasura>(FindObjectsSortMode.None);
-            foreach (ObjetoBasura basura in todasBasuras)
-            {
-                if (basura.estaAtrapada)
-                {
-                    if (basura.tipoBasura == tipoBasuraAceptada)
-                    {
-                        totalBasuraReciclada++;
-                        totalPuntos += 10; // 10 puntos por pieza
+            barraBasuraGlobal.fillAmount = Mathf.Clamp01((float)totalBasuraReciclada / piezasMaximasParaLlenar);
+        }
 
-                        basura.DepositarEnContenedor();
-                        ActualizarBarrasGradual();
-
-                        ControlPersonaje personaje = FindFirstObjectByType<ControlPersonaje>();
-                        if (personaje != null) personaje.DepositarBasuraCorrecta();
-
-                        Debug.Log("¡Reciclado correcto! Total basura: " + totalBasuraReciclada);
-                    }
-                    else
-                    {
-                        Debug.Log("¡Contenedor incorrecto!");
-                    }
-                    break;
-                }
-            }
+        // Actualiza la barra naranja de puntos en tiempo real (10 piezas * 10 puntos = 100 máx)
+        if (barraPuntosGlobal != null)
+        {
+            barraPuntosGlobal.fillAmount = Mathf.Clamp01((float)totalPuntos / (piezasMaximasParaLlenar * 10f));
         }
     }
 
-    void ActualizarBarrasGradual()
+    string LimpiarTexto(string texto)
     {
-        if (barraBasuraImg != null)
-        {
-            barraBasuraImg.fillAmount = totalBasuraReciclada / piezasMaximasParaLlenar;
-            if (barraBasuraImg.fillAmount > 1f) barraBasuraImg.fillAmount = 1f;
-        }
-
-        if (barraPuntosImg != null)
-        {
-            barraPuntosImg.fillAmount = totalPuntos / (piezasMaximasParaLlenar * 10f);
-            if (barraPuntosImg.fillAmount > 1f) barraPuntosImg.fillAmount = 1f;
-        }
+        if (string.IsNullOrEmpty(texto)) return "";
+        texto = texto.Trim().ToLower();
+        texto = texto.Replace("á", "a").Replace("é", "e").Replace("í", "i").Replace("ó", "o").Replace("ú", "u");
+        return texto;
     }
 }

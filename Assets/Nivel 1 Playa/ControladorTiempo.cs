@@ -20,15 +20,27 @@ public class ControladorTiempo : MonoBehaviour
     {
         tiempoRestante = tiempoMaximo;
 
-        GameObject barraObj = GameObject.Find("BarraVerde");
+        // Buscar automáticamente la barra verde del tiempo
+        GameObject barraObj = GameObject.Find("BarraVerdeTiempo");
         if (barraObj != null)
         {
             barraVerdeImg = barraObj.GetComponent<Image>();
         }
 
+        // Asegurar que el panel de Game Over esté oculto al iniciar
         if (panelGameOver != null)
         {
             panelGameOver.SetActive(false);
+        }
+        else
+        {
+            // Si no está asignado en el Inspector, lo buscamos por nombre
+            GameObject panelEncontrado = GameObject.Find("PanelGameOver");
+            if (panelEncontrado != null)
+            {
+                panelGameOver = panelEncontrado;
+                panelGameOver.SetActive(false);
+            }
         }
     }
 
@@ -61,20 +73,34 @@ public class ControladorTiempo : MonoBehaviour
         if (panelGameOver != null)
         {
             panelGameOver.SetActive(true);
+
+            // Búsqueda automática de los textos dentro del panel si las casillas están vacías
+            if (textoBasuraTotal == null)
+            {
+                Transform tBasura = panelGameOver.transform.Find("Text Basura");
+                if (tBasura != null) textoBasuraTotal = tBasura.GetComponent<TMP_Text>();
+            }
+
+            if (textoPuntosTotal == null)
+            {
+                Transform tPuntos = panelGameOver.transform.Find("TextPuntos");
+                if (tPuntos != null) textoPuntosTotal = tPuntos.GetComponent<TMP_Text>();
+            }
         }
 
+        // Obtener las cantidades reales recolectadas durante la partida
         int basuraFinal = ContenedorBasura.totalBasuraReciclada;
         int puntosFinal = ContenedorBasura.totalPuntos;
 
-        // Formato limpio de 2 líneas exactas
+        // Inyectar los valores reales respetando el título
         if (textoBasuraTotal != null)
         {
-            textoBasuraTotal.text = "BASURA\n<b>" + basuraFinal + "</b>";
+            textoBasuraTotal.text = "BASURA\n" + basuraFinal;
         }
 
         if (textoPuntosTotal != null)
         {
-            textoPuntosTotal.text = "PUNTOS\n<b>" + puntosFinal + "</b>";
+            textoPuntosTotal.text = "PUNTOS\n" + puntosFinal;
         }
 
         Time.timeScale = 0f;

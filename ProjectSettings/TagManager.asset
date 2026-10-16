@@ -6,7 +6,10 @@ TagManager:
   tags:
   - Moneda
   - Basura
-  - Bomba
+  - Organico
+  - Inorganico
+  - NoReciclable
+  - Contenedor
   layers:
   - Default
   - TransparentFX

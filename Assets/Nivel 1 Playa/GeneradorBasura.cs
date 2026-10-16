@@ -23,7 +23,7 @@ public class GeneradorBasura : MonoBehaviour
     void IntentarGenerarBasura()
     {
         // Si el tiempo se acabó, ya no genera más basura
-        ControladorTiempo tiempoControl = FindFirstObjectByType<ControladorTiempo>();
+        ControladorTiempo tiempoControl = FindAnyObjectByType<ControladorTiempo>();
         if (tiempoControl != null && tiempoControl.TiempoAgotado()) return;
 
         if (prefabsBasura == null || prefabsBasura.Length == 0) return;
