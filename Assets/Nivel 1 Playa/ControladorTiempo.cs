@@ -5,9 +5,10 @@ using TMPro;
 public class ControladorTiempo : MonoBehaviour
 {
     [Header("Configuración de Tiempo")]
-    public float tiempoMaximo = 60f;
+    public float tiempoMaximo = 90f;
     private float tiempoRestante;
     private bool tiempoTerminado = false;
+    private bool juegoTerminado = false;
 
     private Image barraVerdeImg;
 
@@ -16,36 +17,30 @@ public class ControladorTiempo : MonoBehaviour
     public TMP_Text textoBasuraTotal;
     public TMP_Text textoPuntosTotal;
 
+    [Header("Panel y Textos de Victoria")]
+    public GameObject panelVictoria;
+    public int metaBasuraVictoria = 35;
+    public TMP_Text textoBasuraVictoria; // <-- NUEVO: Texto de basura en Victoria
+    public TMP_Text textoPuntosVictoria; // <-- NUEVO: Texto de puntos en Victoria
+
     void Start()
     {
         tiempoRestante = tiempoMaximo;
 
-        // Buscar automáticamente la barra verde del tiempo
         GameObject barraObj = GameObject.Find("BarraVerdeTiempo");
         if (barraObj != null)
         {
             barraVerdeImg = barraObj.GetComponent<Image>();
         }
 
-        // Asegurar que el panel de Game Over esté oculto al iniciar
-        if (panelGameOver != null)
-        {
-            panelGameOver.SetActive(false);
-        }
-        else
-        {
-            // Si no está asignado en el Inspector, lo buscamos por nombre
-            GameObject panelEncontrado = GameObject.Find("PanelGameOver");
-            if (panelEncontrado != null)
-            {
-                panelGameOver = panelEncontrado;
-                panelGameOver.SetActive(false);
-            }
-        }
+        if (panelGameOver != null) panelGameOver.SetActive(false);
+        if (panelVictoria != null) panelVictoria.SetActive(false);
     }
 
     void Update()
     {
+        if (juegoTerminado) return;
+
         if (tiempoRestante > 0)
         {
             tiempoRestante -= Time.deltaTime;
@@ -54,6 +49,13 @@ public class ControladorTiempo : MonoBehaviour
             {
                 barraVerdeImg.fillAmount = tiempoRestante / tiempoMaximo;
             }
+
+            if (ContenedorBasura.totalBasuraReciclada >= metaBasuraVictoria)
+            {
+                juegoTerminado = true;
+                ActivarVictoria();
+                return;
+            }
         }
         else
         {
@@ -61,9 +63,41 @@ public class ControladorTiempo : MonoBehaviour
             if (!tiempoTerminado)
             {
                 tiempoTerminado = true;
+                juegoTerminado = true;
                 ActivarGameOver();
             }
         }
+    }
+
+    void ActivarVictoria()
+    {
+        Debug.Log("¡Misión cumplida! Mostrando Panel de Victoria.");
+
+        if (panelVictoria != null)
+        {
+            panelVictoria.SetActive(true);
+
+            // Búsqueda automática de los textos dentro del panel de victoria si están vacíos
+            if (textoBasuraVictoria == null)
+            {
+                Transform tBasura = panelVictoria.transform.Find("Text Basura");
+                if (tBasura != null) textoBasuraVictoria = tBasura.GetComponent<TMP_Text>();
+            }
+
+            if (textoPuntosVictoria == null)
+            {
+                Transform tPuntos = panelVictoria.transform.Find("TextPuntos");
+                if (tPuntos != null) textoPuntosVictoria = tPuntos.GetComponent<TMP_Text>();
+            }
+        }
+
+        int basuraFinal = ContenedorBasura.totalBasuraReciclada;
+        int puntosFinal = ContenedorBasura.totalPuntos;
+
+        if (textoBasuraVictoria != null) textoBasuraVictoria.text = "BASURA\n" + basuraFinal;
+        if (textoPuntosVictoria != null) textoPuntosVictoria.text = "PUNTOS\n" + puntosFinal;
+
+        Time.timeScale = 0f;
     }
 
     void ActivarGameOver()
@@ -74,7 +108,6 @@ public class ControladorTiempo : MonoBehaviour
         {
             panelGameOver.SetActive(true);
 
-            // Búsqueda automática de los textos dentro del panel si las casillas están vacías
             if (textoBasuraTotal == null)
             {
                 Transform tBasura = panelGameOver.transform.Find("Text Basura");
@@ -88,20 +121,11 @@ public class ControladorTiempo : MonoBehaviour
             }
         }
 
-        // Obtener las cantidades reales recolectadas durante la partida
         int basuraFinal = ContenedorBasura.totalBasuraReciclada;
         int puntosFinal = ContenedorBasura.totalPuntos;
 
-        // Inyectar los valores reales respetando el título
-        if (textoBasuraTotal != null)
-        {
-            textoBasuraTotal.text = "BASURA\n" + basuraFinal;
-        }
-
-        if (textoPuntosTotal != null)
-        {
-            textoPuntosTotal.text = "PUNTOS\n" + puntosFinal;
-        }
+        if (textoBasuraTotal != null) textoBasuraTotal.text = "BASURA\n" + basuraFinal;
+        if (textoPuntosTotal != null) textoPuntosTotal.text = "PUNTOS\n" + puntosFinal;
 
         Time.timeScale = 0f;
     }

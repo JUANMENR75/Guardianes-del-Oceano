@@ -7,6 +7,7 @@ public class MovimientoPersonaje : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     private Vector2 movimiento;
+    private CircleCollider2D colisionadorPinza;
 
     [Header("Límites de la Arena")]
     public float minX = -7.8f;
@@ -26,6 +27,7 @@ public class MovimientoPersonaje : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        colisionadorPinza = GetComponent<CircleCollider2D>();
 
         if (rb != null)
         {
@@ -36,18 +38,25 @@ public class MovimientoPersonaje : MonoBehaviour
 
     void Update()
     {
-        // 1. Si presionamos espacio y tenemos basura detectada en la pinza, la recogemos
-        if (Input.GetKeyDown(KeyCode.Space) && basuraDetectada != null && !tieneBasura)
+        // 1. Control automático del colisionador de la pinza:
+        // Solo se enciende al mantener presionada la barra espaciadora para evitar capturas anticipadas.
+        if (colisionadorPinza != null)
+        {
+            colisionadorPinza.enabled = Input.GetKey(KeyCode.Space);
+        }
+
+        // 2. Si presionamos espacio y tenemos basura detectada en la pinza, la recogemos
+        if (Input.GetKey(KeyCode.Space) && basuraDetectada != null && !tieneBasura)
         {
             RecogerBasura();
         }
 
-        // 2. Control de Animaciones (Pinza, Caminando, Quieto)
+        // 3. Control de Animaciones (Pinza, Caminando, Quieto)
         if (Input.GetKey(KeyCode.Space))
         {
             anim.SetBool("pinza", true);
             anim.SetBool("caminando", false);
-            movimiento = Vector2.zero; // Se detiene al usar la pinza
+            movimiento = Vector2.zero; // Se detiene al usar la pinza para atrapar
         }
         else
         {
@@ -70,7 +79,7 @@ public class MovimientoPersonaje : MonoBehaviour
 
     void FixedUpdate()
     {
-        // 3. Movimiento físico respetando los límites de la arena
+        // 4. Movimiento físico respetando los límites de la arena
         if (rb != null)
         {
             Vector2 nuevaPosicion = rb.position + movimiento * velocidad * Time.fixedDeltaTime;
@@ -81,7 +90,7 @@ public class MovimientoPersonaje : MonoBehaviour
             rb.MovePosition(nuevaPosicion);
         }
 
-        // 4. BLOQUEO ABSOLUTO DE ESCALA: Mantiene siempre el tamaño exacto de 0.4 sin alterar nada
+        // 5. BLOQUEO ABSOLUTO DE ESCALA: Mantiene siempre el tamaño exacto sin alterarse
         transform.localScale = escalaUnica;
     }
 
@@ -94,9 +103,9 @@ public class MovimientoPersonaje : MonoBehaviour
         Rigidbody2D rbBasura = basuraEnMano.GetComponent<Rigidbody2D>();
         if (rbBasura != null) rbBasura.simulated = false;
 
-        // La basura se vuelve hija del personaje para transportarla más al frente de la pinza
+        // La basura se vuelve hija del personaje para transportarla frente a la pinza
         basuraEnMano.transform.SetParent(transform);
-        basuraEnMano.transform.localPosition = new Vector3(0.8f, 0f, 0f); // Posición más adelantada en la mano
+        basuraEnMano.transform.localPosition = new Vector3(1.2f, 0f, 0f); // Posición al frente en la mano
 
         Debug.Log("¡Basura recogida con la pinza!");
     }
@@ -104,13 +113,13 @@ public class MovimientoPersonaje : MonoBehaviour
     // Detección mediante Triggers
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // 1. Detectar la basura cercana
-        if ((collision.CompareTag("Basura") || collision.CompareTag("Organico") || collision.CompareTag("Inorganico") || collision.CompareTag("NoReciclable")) && !tieneBasura)
+        // 1. Detectar la basura cercana cuando la pinza está activa
+        if ((collision.CompareTag("Basura")|| collision.CompareTag("Organico") || collision.CompareTag("Inorganico") || collision.CompareTag("NoReciclable")) && !tieneBasura)
         {
             basuraDetectada = collision.gameObject;
         }
 
-        // 2. Depositar la basura al tocar el contenedor
+        // 2. Depositar la basura al tocar el contenedor correcto
         if (collision.CompareTag("Contenedor") && tieneBasura && basuraEnMano != null)
         {
             ContenedorBasura contenedor = collision.GetComponent<ContenedorBasura>();
@@ -118,7 +127,6 @@ public class MovimientoPersonaje : MonoBehaviour
 
             if (contenedor != null && objBasura != null)
             {
-                // Limpiamos y normalizamos textos para comparar sin fallos de acentos
                 string tipoBasuraLimpio = LimpiarTexto(objBasura.tipoBasura);
                 string tipoAceptadoLimpio = LimpiarTexto(contenedor.tipoBasuraAceptada);
 
@@ -128,12 +136,11 @@ public class MovimientoPersonaje : MonoBehaviour
                     ContenedorBasura.totalBasuraReciclada++;
                     ContenedorBasura.totalPuntos += 10;
 
-                    // Llamamos al método estático o actualizamos las barras buscando el contenedor
                     objBasura.DepositerEnContenedorLocal(); // Destruye la basura
 
                     Debug.Log("¡Depósito correcto en el contenedor!");
 
-                    // Reiniciar estados
+                    // Reiniciar estados para permitir recoger más basura
                     tieneBasura = false;
                     basuraDetectada = null;
                     basuraEnMano = null;

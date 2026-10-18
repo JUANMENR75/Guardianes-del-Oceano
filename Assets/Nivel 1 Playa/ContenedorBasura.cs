@@ -15,7 +15,7 @@ public class ContenedorBasura : MonoBehaviour
     private static Image barraPuntosGlobal;
 
     // 10 piezas máximo para que la barra se llene al 100% y se note rápido con cada pieza
-    private static float piezasMaximasParaLlenar = 10f;
+    private static float piezasMaximasParaLlenar = 35f;
 
     void Start()
     {
