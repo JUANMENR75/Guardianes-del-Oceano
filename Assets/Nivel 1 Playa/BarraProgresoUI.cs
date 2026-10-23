@@ -5,10 +5,9 @@ using TMPro;
 public class BarraProgresoUI : MonoBehaviour
 {
     private Image barraImagen;
-    private float maxPiezas = 30f; // TOTAL DE PIEZAS DE BASURA QUE SE POUDEN PONER EN LAS BARRA
 
     [Header("Configuración del Tiempo")]
-    private float tiempoTotal = 20f;  // TOTAL DE TIEMPO QUE SE POUDEN PONER EN LAS BARRA
+    private float tiempoTotal = 90f;
     private static float tiempoActual;
 
     [Header("Panel de Game Over")]
@@ -43,70 +42,34 @@ public class BarraProgresoUI : MonoBehaviour
         // 1. Control del tiempo
         if (gameObject.name.Contains("Tiempo") || gameObject.name.Contains("Verde"))
         {
+            ControladorTiempo ctrlTiempo = Object.FindAnyObjectByType<ControladorTiempo>();
+            float tiempoMax = ctrlTiempo != null ? ctrlTiempo.tiempoMaximo : 90f;
+
             if (tiempoActual > 0f)
             {
                 tiempoActual -= Time.deltaTime;
-                barraImagen.fillAmount = Mathf.Clamp01(tiempoActual / tiempoTotal);
-            }
-            else
-            {
-                if (panelGameOverAsignado != null && !panelGameOverAsignado.activeSelf)
-                {
-                    panelGameOverAsignado.SetActive(true);
-
-                    // Asignar los totales exactos usando los nombres de tu jerarquía
-                    AsignarTotalesExactos();
-                }
+                barraImagen.fillAmount = Mathf.Clamp01(tiempoActual / tiempoMax);
             }
             return;
         }
 
-        // 2. Barra de basura
+        // Obtener la meta dinámica desde el ControladorTiempo de la escena
+        ControladorTiempo controladorTiempo = Object.FindAnyObjectByType<ControladorTiempo>();
+        float metaDinamica = 35f; // Valor por defecto
+        if (controladorTiempo != null)
+        {
+            metaDinamica = (float)controladorTiempo.metaBasuraVictoria;
+        }
+
+        // 2. Barra de basura (se adapta automáticamente a la meta elegida)
         if (gameObject.name == "BarraAzulBasura")
         {
-            barraImagen.fillAmount = Mathf.Clamp01((float)ContenedorBasura.totalBasuraReciclada / maxPiezas);
+            barraImagen.fillAmount = Mathf.Clamp01((float)ContenedorBasura.totalBasuraReciclada / metaDinamica);
         }
         // 3. Barra de puntos (cada pieza vale 10 puntos)
         else if (gameObject.name == "BarraNaranjaPuntos")
         {
-            barraImagen.fillAmount = Mathf.Clamp01((float)ContenedorBasura.totalPuntos / (maxPiezas * 10f));
+            barraImagen.fillAmount = Mathf.Clamp01((float)ContenedorBasura.totalPuntos / (metaDinamica * 10f));
         }
-    }
-
-    void AsignarTotalesExactos()
-    {
-        if (panelGameOverAsignado == null) return;
-
-        string valBasura = ContenedorBasura.totalBasuraReciclada.ToString();
-        string valPuntos = ContenedorBasura.totalPuntos.ToString();
-
-        // Buscar exactamente por los nombres de tu jerarquía: "Text Basura" y "TextPuntos"
-        Transform tBasura = panelGameOverAsignado.transform.Find("Text Basura");
-        Transform tPuntos = panelGameOverAsignado.transform.Find("TextPuntos");
-
-        if (tBasura != null)
-        {
-            AsignarTextoUniversal(tBasura, valBasura);
-        }
-
-        if (tPuntos != null)
-        {
-            AsignarTextoUniversal(tPuntos, valPuntos);
-        }
-    }
-
-    void AsignarTextoUniversal(Transform objetoHijo, string textoNuevo)
-    {
-        Text txtStandard = objetoHijo.GetComponent<Text>();
-        if (txtStandard != null) { txtStandard.text = textoNuevo; return; }
-
-        TextMeshProUGUI txtTMP = objetoHijo.GetComponent<TextMeshProUGUI>();
-        if (txtTMP != null) { txtTMP.text = textoNuevo; return; }
-
-        Text txtHijo = objetoHijo.GetComponentInChildren<Text>();
-        if (txtHijo != null) { txtHijo.text = textoNuevo; return; }
-
-        TextMeshProUGUI txtTMPHijo = objetoHijo.GetComponentInChildren<TextMeshProUGUI>();
-        if (txtTMPHijo != null) { txtTMPHijo.text = textoNuevo; return; }
     }
 }

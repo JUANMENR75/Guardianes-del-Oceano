@@ -3,88 +3,92 @@ using UnityEngine;
 public class ControladorBarco : MonoBehaviour
 {
     [Header("Configuración de Movimiento")]
-    [Tooltip("Qué tan rápido responde el barco al presionar las teclas")]
-    public float velocidadMovimiento = 5f;
+    public float velocidadMovimiento = 2f;
 
     [Header("Límites de Pantalla")]
     public float limiteSuperior = -0.8f;
-    public float limiteInferior = -7.8f;
+    public float limiteInferior = -7.6f;
 
-    [Header("Configuración de Balanceo (Ajustable)")]
-    [Tooltip("Qué tanto se inclina el barco (0 = recto)")]
+    [Header("Configuración de Balanceo")]
     public float amplitudRotacion = 6.58f;
-    [Tooltip("Qué tan rápido se inclina")]
     public float velocidadRotacion = 2f;
 
     private float posicionBaseY;
 
-    // Referencia al script de puntuación
-    private GestorPuntuacion gestorPuntuacion;
-
-    [Header("Gestión de Fin de Juego")]
+    [Header("Referencias del Sistema")]
+    public GestorPuntuacion gestorPuntuacion;
     public GestorGameOver gestorGameOver;
 
     void Start()
     {
         posicionBaseY = transform.position.y;
-        gestorPuntuacion = FindAnyObjectByType<GestorPuntuacion>();
+
+        if (gestorPuntuacion == null)
+        {
+            gestorPuntuacion = FindAnyObjectByType<GestorPuntuacion>();
+        }
+
+        if (gestorGameOver == null)
+        {
+            gestorGameOver = FindAnyObjectByType<GestorGameOver>();
+        }
     }
 
     void Update()
     {
-        // Movimiento controlado
         float inputY = Input.GetAxisRaw("Vertical");
         posicionBaseY += inputY * velocidadMovimiento * Time.deltaTime;
         posicionBaseY = Mathf.Clamp(posicionBaseY, limiteInferior, limiteSuperior);
 
-        // Balanceo ajustable
         float rotacionZ = Mathf.Sin(Time.time * velocidadRotacion) * amplitudRotacion;
 
-        // Aplicamos la posición y la rotación
         transform.position = new Vector3(transform.position.x, posicionBaseY, 0);
         transform.rotation = Quaternion.Euler(0, 0, rotacionZ);
     }
 
+    // Detección por Trigger para Monedas, Basura y Bombas
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (gestorPuntuacion == null) return;
-
         if (collision.CompareTag("Moneda"))
         {
-            gestorPuntuacion.SumarMoneda();
+            if (gestorPuntuacion != null)
+                gestorPuntuacion.SumarMoneda(1);
 
-            // --- NUEVO: Reproducir sonido de moneda ---
             if (SonidosEscena1.instance != null)
-            {
                 SonidosEscena1.instance.ReproducirSonidoMoneda();
-            }
 
             Destroy(collision.gameObject);
         }
         else if (collision.CompareTag("Basura"))
         {
-            gestorPuntuacion.SumarBasura();
+            if (gestorPuntuacion != null)
+                gestorPuntuacion.SumarBasura(1);
 
-            // --- NUEVO: Reproducir sonido de basura ---
             if (SonidosEscena1.instance != null)
-            {
                 SonidosEscena1.instance.ReproducirSonidoBasura();
-            }
 
             Destroy(collision.gameObject);
         }
         else if (collision.CompareTag("Bomba"))
         {
-            // --- NUEVO: Reproducir sonido de explosión y Game Over ---
+            Debug.Log("¡BOMBA TOCADA! Activando pantalla de Game Over...");
+
             if (SonidosEscena1.instance != null)
             {
                 SonidosEscena1.instance.TriggerGameOver();
             }
 
-            // Ya no se reinicia la escena, ahora activamos el Game Over
             if (gestorGameOver != null)
             {
                 gestorGameOver.ActivarGameOver();
+            }
+            else
+            {
+                GestorGameOver gameOverEmergencia = FindAnyObjectByType<GestorGameOver>();
+                if (gameOverEmergencia != null)
+                {
+                    gameOverEmergencia.ActivarGameOver();
+                }
             }
         }
     }

@@ -3,44 +3,58 @@ using TMPro;
 
 public class GestorPuntuacion : MonoBehaviour
 {
-    public TextMeshProUGUI numeroMonedas;
-    public TextMeshProUGUI numeroBasura;
-    public TextMeshProUGUI numeroDistancia;
+    [Header("Referencias de Textos del HUD")]
+    public TextMeshProUGUI NumeroMonedas;
+    public TextMeshProUGUI NumeroBasura;
+    public TextMeshProUGUI NumeroDistancia;
 
-    // Estas variables ahora son privadas para seguridad, pero las propiedades públicas 
-    // de abajo permiten que otros scripts las lean.
-    private int contMonedas = 0;
-    private int contBasura = 0;
-    private float distancia = 0;
+    private int contadorMonedas = 0;
+    private int contadorBasura = 0;
+    private int distanciaRecorrida = 0; // Ahora es entero para evitar fracciones
+    private float tiempoAcumulado = 0f;
 
-    // Propiedades públicas para que GestorGameOver pueda obtener los valores
-    public int Monedas => contMonedas;
-    public int Basura => contBasura;
-    public int Distancia => Mathf.RoundToInt(distancia);
-
-    void Start()
-    {
-        if (numeroMonedas != null) numeroMonedas.text = "0";
-        if (numeroBasura != null) numeroBasura.text = "0";
-        if (numeroDistancia != null) numeroDistancia.text = "0";
-    }
-
-    public void SumarMoneda()
-    {
-        contMonedas++;
-        if (numeroMonedas != null) numeroMonedas.text = contMonedas.ToString();
-    }
-
-    public void SumarBasura()
-    {
-        contBasura++;
-        if (numeroBasura != null) numeroBasura.text = contBasura.ToString();
-    }
+    public int Monedas => contadorMonedas;
+    public int Basura => contadorBasura;
+    public int Distancia => distanciaRecorrida; // Devuelve número entero sólido
 
     void Update()
     {
-        distancia += Time.deltaTime;
-        if (numeroDistancia != null)
-            numeroDistancia.text = Distancia.ToString();
+        // Controlamos el tiempo para que avance más lento (ej. 1 metro cada 0.8 segundos)
+        tiempoAcumulado += Time.deltaTime;
+
+        if (tiempoAcumulado >= 0.8f)
+        {
+            distanciaRecorrida++;
+            tiempoAcumulado = 0f;
+        }
+
+        ActualizarHUD();
+    }
+
+    void ActualizarHUD()
+    {
+        if (NumeroMonedas != null)
+            NumeroMonedas.text = contadorMonedas.ToString();
+
+        if (NumeroBasura != null)
+            NumeroBasura.text = contadorBasura.ToString();
+
+        if (NumeroDistancia != null)
+            NumeroDistancia.text = distanciaRecorrida.ToString() + " m";
+    }
+
+    public void SumarMoneda(int cantidad = 1)
+    {
+        contadorMonedas += cantidad;
+    }
+
+    public void SumarBasura(int cantidad = 1)
+    {
+        contadorBasura += cantidad;
+    }
+
+    public void SumarDistancia(int cantidad)
+    {
+        distanciaRecorrida += cantidad;
     }
 }

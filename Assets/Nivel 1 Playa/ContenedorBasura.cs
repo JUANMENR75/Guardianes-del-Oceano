@@ -4,25 +4,19 @@ using UnityEngine.UI;
 public class ContenedorBasura : MonoBehaviour
 {
     [Header("Configuración del Contenedor")]
-    public string tipoBasuraAceptada; // "Orgánico", "Inorgánico", "NoReciclable"
+    public string tipoBasuraAceptada;
 
-    // Contadores globales compartidos para el juego y el Game Over
     public static int totalBasuraReciclada = 0;
     public static int totalPuntos = 0;
 
-    // Referencias globales estáticas para las barras actualizadas
     private static Image barraBasuraGlobal;
     private static Image barraPuntosGlobal;
-
-    // 10 piezas máximo para que la barra se llene al 100% y se note rápido con cada pieza
-    private static float piezasMaximasParaLlenar = 35f;
 
     void Start()
     {
         totalBasuraReciclada = 0;
         totalPuntos = 0;
 
-        // Búsqueda automática con los NUEVOS nombres exactos que pusiste en el Canvas
         GameObject objBasura = GameObject.Find("BarraAzulBasura");
         if (objBasura != null) barraBasuraGlobal = objBasura.GetComponent<Image>();
 
@@ -41,12 +35,11 @@ public class ContenedorBasura : MonoBehaviour
 
         if (basuraLimpia == contenedorLimpio)
         {
-            // Sumamos los totales
             totalBasuraReciclada++;
-            totalPuntos += 10; // 10 puntos por cada pieza correcta
+            totalPuntos += 10;
 
-            basura.DepositerEnContenedorLocal(); // Destruye la basura recolectada
-            ActualizarBarraVisualDirecta();       // Actualiza las barras visuales al instante en tiempo real
+            basura.DepositerEnContenedorLocal();
+            ActualizarBarraVisualDirecta();
 
             Debug.Log($"¡Depósito correcto! Basura: {totalBasuraReciclada} | Puntos: {totalPuntos}");
         }
@@ -58,16 +51,22 @@ public class ContenedorBasura : MonoBehaviour
 
     public static void ActualizarBarraVisualDirecta()
     {
-        // Actualiza la barra azul de basura en tiempo real
-        if (barraBasuraGlobal != null)
+        ControladorTiempo controladorTiempo = Object.FindAnyObjectByType<ControladorTiempo>();
+        float metaDinamica = 35f;
+
+        if (controladorTiempo != null)
         {
-            barraBasuraGlobal.fillAmount = Mathf.Clamp01((float)totalBasuraReciclada / piezasMaximasParaLlenar);
+            metaDinamica = (float)controladorTiempo.metaBasuraVictoria;
         }
 
-        // Actualiza la barra naranja de puntos en tiempo real (10 piezas * 10 puntos = 100 máx)
+        if (barraBasuraGlobal != null)
+        {
+            barraBasuraGlobal.fillAmount = Mathf.Clamp01((float)totalBasuraReciclada / metaDinamica);
+        }
+
         if (barraPuntosGlobal != null)
         {
-            barraPuntosGlobal.fillAmount = Mathf.Clamp01((float)totalPuntos / (piezasMaximasParaLlenar * 10f));
+            barraPuntosGlobal.fillAmount = Mathf.Clamp01((float)totalPuntos / (metaDinamica * 10f));
         }
     }
 

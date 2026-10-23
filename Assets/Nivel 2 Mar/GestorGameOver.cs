@@ -1,42 +1,51 @@
 using UnityEngine;
-using TMPro;
 using UnityEngine.SceneManagement;
 
 public class GestorGameOver : MonoBehaviour
 {
-    public GameObject panelGameOver; // Arrastra aquí tu PanelGameOver
-    public TextMeshProUGUI textoMonedas; // Arrastra tu texto de monedas
-    public TextMeshProUGUI textoBasura;  // Arrastra tu texto de basura
-    public TextMeshProUGUI textoDistancia; // Arrastra tu texto de distancia
-
-    public GestorPuntuacion gestorPuntuacion; // Arrastra tu objeto que tiene el script GestorPuntuacion
+    [Header("Panel y Botones de Game Over")]
+    public GameObject panelGameOver;
+    public GameObject botonJugarDeNuevo;
+    public GameObject botonMenuPrincipal;
 
     public void ActivarGameOver()
     {
-        // Esto detiene el tiempo y todo movimiento basado en Time.deltaTime
-        Time.timeScale = 0;
+        Debug.Log(">>> ¡Ejecutando ActivarGameOver en el Gestor! <<<");
 
-        // Esto hace que el panel sea visible
-        panelGameOver.SetActive(true);
+        // Búsqueda de emergencia por si el panel no está asignado
+        if (panelGameOver == null)
+        {
+            panelGameOver = GameObject.Find("PanelGameOver");
+        }
 
-        // Actualizamos los textos
-        textoMonedas.text = "Monedas: " + gestorPuntuacion.Monedas;
-        textoBasura.text = "Basura: " + gestorPuntuacion.Basura;
-        textoDistancia.text = "Distancia: " + gestorPuntuacion.Distancia + " m";
+        // Activamos visualmente el panel de Game Over en la pantalla
+        if (panelGameOver != null)
+        {
+            panelGameOver.SetActive(true);
+            Debug.Log("¡Panel GameOver activado con éxito en pantalla!");
+        }
+        else
+        {
+            Debug.LogError("¡ERROR CRÍTICO: No se encuentra el PanelGameOver en la escena!");
+        }
+
+        // Forzamos a que los botones también se enciendan al perder
+        if (botonJugarDeNuevo != null) botonJugarDeNuevo.SetActive(true);
+        if (botonMenuPrincipal != null) botonMenuPrincipal.SetActive(true);
+
+        // Pausar el juego al perder
+        Time.timeScale = 0f;
     }
 
     public void ReiniciarJuego()
     {
-        Debug.Log("Reiniciando juego...");
-        Time.timeScale = 1; // ¡Esto es clave! Devuelve el tiempo a la normalidad
-
-        // Cargamos la escena actual
+        Time.timeScale = 1f; // Restaurar el tiempo antes de recargar
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void IrAlMenuPrincipal()
     {
-        Time.timeScale = 1; // Reanudamos el tiempo antes de salir
-        SceneManager.LoadScene("MenuPrincipal"); // Cambia "MenuPrincipal" por el nombre exacto de tu escena
+        Time.timeScale = 1f; // Restaurar el tiempo antes de cambiar de escena
+        SceneManager.LoadScene("MenuPrincipal"); // Cambia por el nombre exacto de tu escena de menú si es diferente
     }
 }

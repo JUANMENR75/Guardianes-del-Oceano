@@ -2,19 +2,36 @@ using UnityEngine;
 
 public class GeneradorObjetos : MonoBehaviour
 {
+    [Header("Configuración del Generador")]
+    [Tooltip("Marca esta casilla SI este objeto es exclusivamente para generar BOMBAS.")]
+    public bool esGeneradorDeBombas = false;
+
+    [Header("Lista de Prefabs")]
     public GameObject[] prefabs;
 
-    [Header("Configuración de Tiempo")]
-    public float tiempoMinimo = 1.0f; // Más rápido
-    public float tiempoMaximo = 2.0f; // Más rápido
+    [Header("1. Frecuencia de Aparición (Tiempo)")]
+    public float tiempoMinimo = 1.0f;
+    public float tiempoMaximo = 4.0f;
+
+    [Header("2. Alturas para Monedas y Basura (Eje Y)")]
+    public float alturaMinimaObjetos = -8.3f;
+    public float alturaMaximaObjetos = 2.0f;
+
+    [Header("3. Alturas Exclusivas para Bombas (Eje Y)")]
+    public float alturaMinimaBombas = -8.3f;
+    public float alturaMaximaBombas = 2.0f;
+
+    [Header("4. Ancho de Pantalla (Eje X)")]
+    public float xMinimo = 9f;
+    public float xMaximo = 16f;
 
     private float contador;
     private float tiempoSiguienteGeneracion;
-    private int ultimoIndice = -1; // Para evitar repetir el mismo objeto siempre
+    private int ultimoIndice = -1;
 
     void Start()
     {
-        tiempoSiguienteGeneracion = 1.0f;
+        tiempoSiguienteGeneracion = 2.0f;
     }
 
     void Update()
@@ -26,7 +43,6 @@ public class GeneradorObjetos : MonoBehaviour
             GenerarObjeto();
             contador = 0;
 
-            // Calculamos el próximo tiempo
             float factorDificultad = 1.0f / ControladorDificultad.multiplicadorVelocidad;
             tiempoSiguienteGeneracion = Random.Range(tiempoMinimo * factorDificultad, tiempoMaximo * factorDificultad);
         }
@@ -34,7 +50,8 @@ public class GeneradorObjetos : MonoBehaviour
 
     void GenerarObjeto()
     {
-        // 1. Elegir un índice que no sea el mismo que el anterior
+        if (prefabs.Length == 0) return;
+
         int nuevoIndice;
         do
         {
@@ -43,11 +60,20 @@ public class GeneradorObjetos : MonoBehaviour
 
         ultimoIndice = nuevoIndice;
 
-        // 2. Generar posición
-        float yAleatorio = Random.Range(-7.5f, -0.5f);
-        Vector3 posicionSpawn = new Vector3(14f, yAleatorio, 0f);
+        // Selección de altura limpia y separada
+        float yAleatorio;
+        if (esGeneradorDeBombas)
+        {
+            yAleatorio = Random.Range(alturaMinimaBombas, alturaMaximaBombas);
+        }
+        else
+        {
+            yAleatorio = Random.Range(alturaMinimaObjetos, alturaMaximaObjetos);
+        }
 
-        // 3. Crear el objeto
+        float xAleatorio = Random.Range(xMinimo, xMaximo);
+        Vector3 posicionSpawn = new Vector3(xAleatorio, yAleatorio, 0f);
+
         Instantiate(prefabs[nuevoIndice], posicionSpawn, Quaternion.identity);
     }
 }

@@ -584,6 +584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fffb61c7adc2844f860d3e8e107c4e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControladorGameOverUI
+  panelVictoria: {fileID: 0}
 --- !u!1 &122001729
 GameObject:
   m_ObjectHideFlags: 0
@@ -4509,6 +4510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fffb61c7adc2844f860d3e8e107c4e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControladorGameOverUI
+  panelVictoria: {fileID: 1422607775}
 --- !u!114 &1422607778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4775,7 +4777,7 @@ MonoBehaviour:
   textoBasuraTotal: {fileID: 0}
   textoPuntosTotal: {fileID: 0}
   panelVictoria: {fileID: 1422607775}
-  metaBasuraVictoria: 35
+  metaBasuraVictoria: 30
   textoBasuraVictoria: {fileID: 0}
   textoPuntosVictoria: {fileID: 0}
 --- !u!1 &1555798726

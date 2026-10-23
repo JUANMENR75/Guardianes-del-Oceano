@@ -20,8 +20,8 @@ public class ControladorTiempo : MonoBehaviour
     [Header("Panel y Textos de Victoria")]
     public GameObject panelVictoria;
     public int metaBasuraVictoria = 35;
-    public TMP_Text textoBasuraVictoria; // <-- NUEVO: Texto de basura en Victoria
-    public TMP_Text textoPuntosVictoria; // <-- NUEVO: Texto de puntos en Victoria
+    public TMP_Text textoBasuraVictoria;
+    public TMP_Text textoPuntosVictoria;
 
     void Start()
     {
@@ -53,7 +53,7 @@ public class ControladorTiempo : MonoBehaviour
             if (ContenedorBasura.totalBasuraReciclada >= metaBasuraVictoria)
             {
                 juegoTerminado = true;
-                ActivarVictoria();
+                ActivarVictoriaCompleta();
                 return;
             }
         }
@@ -69,15 +69,51 @@ public class ControladorTiempo : MonoBehaviour
         }
     }
 
-    void ActivarVictoria()
+    void ActivarVictoriaCompleta()
     {
-        Debug.Log("¡Misión cumplida! Mostrando Panel de Victoria.");
+        Debug.Log("¡Misión cumplida! Limpiando toda la basura y mostrando Panel de Victoria.");
 
+        // 1. DESTRUIR ABSOLUTAMENTE TODA LA BASURA EN PANTALLA
+        ObjetoBasura[] basurasPorScript = Object.FindObjectsByType<ObjetoBasura>(FindObjectsSortMode.None);
+        foreach (ObjetoBasura b in basurasPorScript)
+        {
+            if (b != null)
+            {
+                Destroy(b.gameObject);
+            }
+        }
+
+        string[] tagsBasura = { "Inorganico", "NoReciclable", "Organico", "Basura" };
+        foreach (string t in tagsBasura)
+        {
+            GameObject[] objetosConTag = GameObject.FindGameObjectsWithTag(t);
+            foreach (GameObject obj in objetosConTag)
+            {
+                if (obj != null)
+                {
+                    Destroy(obj);
+                }
+            }
+        }
+
+        GeneradorBasura generador = Object.FindAnyObjectByType<GeneradorBasura>();
+        if (generador != null)
+        {
+            generador.gameObject.SetActive(false);
+        }
+
+        // 2. CONGELAR Y ASEGURAR QUE LA BARRA VERDE SE QUEDE EN SU VALOR ACTUAL
+        if (barraVerdeImg != null)
+        {
+            barraVerdeImg.fillAmount = tiempoRestante / tiempoMaximo;
+            barraVerdeImg.gameObject.SetActive(true);
+        }
+
+        // 3. Activar el panel visual de victoria
         if (panelVictoria != null)
         {
             panelVictoria.SetActive(true);
 
-            // Búsqueda automática de los textos dentro del panel de victoria si están vacíos
             if (textoBasuraVictoria == null)
             {
                 Transform tBasura = panelVictoria.transform.Find("Text Basura");
