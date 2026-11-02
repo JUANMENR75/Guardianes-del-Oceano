@@ -6,7 +6,7 @@ public class MenuManager : MonoBehaviour
     // Variable para saber si venimos a jugar o solo a ver la muestra
     public static bool modoJuegoActivo = false;
 
-    // 1. Botón Jugar: SÍ activa el modo de juego y va a escenarios
+    // 1. Botón Jugar: Sí activa el modo de juego y va a escenarios
     public void IrAEscenarios()
     {
         modoJuegoActivo = true; // Activa los botones de nivel
@@ -35,6 +35,12 @@ public class MenuManager : MonoBehaviour
     public void IrANivelMar()
     {
         if (modoJuegoActivo) SceneManager.LoadScene("Nivel 2 Mar");
+    }
+
+    // --- ÚNICO AGREGADO: Función para el Nivel 3 ---
+    public void IrANivelMarProfundo()
+    {
+        if (modoJuegoActivo) SceneManager.LoadScene("Nivel 3 MarProfundo");
     }
 
     // 5. Regresar al Menú Principal

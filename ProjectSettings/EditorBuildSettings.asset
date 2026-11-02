@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Nivel 2 Mar.unity
     guid: f76e80b81a8f1b340bae00b02e1fe508
+  - enabled: 1
+    path: Assets/Nivel 3 MarProfundo.unity
+    guid: bf1ab44d4ff1bc6489f50a12ff1d3143
   m_configObjects: {}
