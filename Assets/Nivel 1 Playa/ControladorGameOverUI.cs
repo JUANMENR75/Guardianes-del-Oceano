@@ -30,6 +30,12 @@ public class ControladorGameOverUI : MonoBehaviour
             panelVictoria.SetActive(true);
         }
 
+        // --- NUEVO: Pausar todo el audio al ganar ---
+        if (ControladorSonidoPlaya.Instance != null)
+        {
+            ControladorSonidoPlaya.Instance.PausarTodoElAudio();
+        }
+
         // Destruye la basura por componente
         ObjetoBasura[] basurasPorScript = Object.FindObjectsByType<ObjetoBasura>(FindObjectsSortMode.None);
         foreach (ObjetoBasura b in basurasPorScript)

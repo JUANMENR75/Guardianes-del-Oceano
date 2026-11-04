@@ -3,32 +3,42 @@ using UnityEngine;
 public class ControlPila : MonoBehaviour
 {
     [Header("Configuración de Recarga y Tiempos")]
-    public float puntosRecarga = 10f;
-    public bool esPilaRoja = false; // <-- Márcalo en el Inspector si es la pila roja para que reste
-    public float intervaloAparicion = 30f;
+    public float puntosRecarga = 5f;
+    public bool esPilaRoja = false;
+    public float intervaloAparicion = 20f;
     public float tiempoEnPantalla = 10f;
-    public float velocidadCaida = 0.8f;   // <--- Bajada mucho más lenta y suave
+    public float velocidadCaida = 2f;
+
+    [Header("Límites Estrictos de la Pantalla")]
+    public float limiteDerecha = 8.5f;
+    public float limiteIzquierda = -8.5f;
+    public float limiteArriba = 4.3f;
+    public float limiteAbajo = -4f;
 
     private float temporizadorAparicion;
     private float temporizadorVida;
     private bool estaActiva = false;
-    private Vector2 direccionPila;
-
-    [Header("Límites Estrictos de la Pantalla")]
-    public float limiteDerecha = 8.0f;
-    public float limiteIzquierda = -8.0f;
-    public float limiteArriba = 4.2f;
-    public float limiteAbajo = -3.2f;
 
     private SpriteRenderer spriteRenderer;
     private Collider2D colisionador;
+    private Rigidbody2D rb2d;
     private MovimientoSubmarino submarino;
+
+    public static bool turnoPilaRoja = false;
+    public static bool hayAlgunaPilaActiva = false;
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         colisionador = GetComponent<Collider2D>();
+        rb2d = GetComponent<Rigidbody2D>();
         submarino = FindAnyObjectByType<MovimientoSubmarino>();
+
+        if (rb2d != null)
+        {
+            rb2d.gravityScale = 0f; // Evitamos gravedad extra de Unity
+            rb2d.freezeRotation = true;
+        }
 
         OcultarPila();
         temporizadorAparicion = intervaloAparicion;
@@ -42,6 +52,9 @@ public class ControlPila : MonoBehaviour
         {
             if (!estaActiva)
             {
+                if (hayAlgunaPilaActiva) return;
+                if (esPilaRoja != turnoPilaRoja) return;
+
                 temporizadorAparicion -= Time.deltaTime;
                 if (temporizadorAparicion <= 0f)
                 {
@@ -50,35 +63,24 @@ public class ControlPila : MonoBehaviour
             }
             else
             {
-                // Movimiento de caída lento
-                transform.Translate(direccionPila * velocidadCaida * Time.deltaTime);
+                // Forzamos el descenso usando el Rigidbody2D
+                if (rb2d != null && rb2d.simulated)
+                {
+                    rb2d.linearVelocity = new Vector2(0f, -Mathf.Abs(velocidadCaida));
+                }
 
+                // Control estricto de límites
                 Vector3 pos = transform.position;
+                pos.x = Mathf.Clamp(pos.x, limiteIzquierda, limiteDerecha);
 
-                // 1. REBOTE SOLO EN LOS MÁRGENES LATERALES
-                if (pos.x <= limiteIzquierda || pos.x >= limiteDerecha)
-                {
-                    direccionPila.x = -direccionPila.x;
-                    pos.x = Mathf.Clamp(pos.x, limiteIzquierda, limiteDerecha);
-                }
-
-                // 2. REBOTE EN EL TOPE SUPERIOR
-                if (pos.y >= limiteArriba)
-                {
-                    direccionPila.y = -direccionPila.y;
-                    pos.y = Mathf.Clamp(pos.y, limiteAbajo, limiteArriba);
-                }
-
-                // 3. SI LLEGA AL FONDO (LÍMITE ABAJO): SE DETIENE POR COMPLETO Y SE QUEDA QUIETA (CERO REBOTE)
                 if (pos.y <= limiteAbajo)
                 {
                     pos.y = limiteAbajo;
-                    direccionPila = Vector2.zero;
+                    if (rb2d != null) rb2d.linearVelocity = Vector2.zero;
                 }
 
                 transform.position = pos;
 
-                // Control de tiempo en pantalla
                 temporizadorVida -= Time.deltaTime;
                 if (temporizadorVida <= 0f)
                 {
@@ -99,13 +101,12 @@ public class ControlPila : MonoBehaviour
         float randomX = Random.Range(limiteIzquierda + 1f, limiteDerecha - 1f);
         transform.position = new Vector3(randomX, limiteArriba, 0f);
 
-        // Dirección inicial suave hacia abajo con un leve toque horizontal
-        direccionPila = new Vector2(Random.Range(-0.2f, 0.2f), -1f).normalized;
-
         if (spriteRenderer != null) spriteRenderer.enabled = true;
         if (colisionador != null) colisionador.enabled = true;
+        if (rb2d != null) rb2d.simulated = true;
 
         estaActiva = true;
+        hayAlgunaPilaActiva = true;
         temporizadorVida = tiempoEnPantalla;
     }
 
@@ -113,7 +114,19 @@ public class ControlPila : MonoBehaviour
     {
         if (spriteRenderer != null) spriteRenderer.enabled = false;
         if (colisionador != null) colisionador.enabled = false;
+        if (rb2d != null)
+        {
+            rb2d.linearVelocity = Vector2.zero;
+            rb2d.simulated = false;
+        }
+
+        if (estaActiva)
+        {
+            turnoPilaRoja = !turnoPilaRoja;
+        }
+
         estaActiva = false;
+        hayAlgunaPilaActiva = false;
     }
 
     void OnTriggerEnter2D(Collider2D otro)
@@ -123,22 +136,36 @@ public class ControlPila : MonoBehaviour
         MovimientoSubmarino sub = otro.GetComponent<MovimientoSubmarino>();
         if (sub != null)
         {
+            // 1. Desactivamos TODO de inmediato al primer toque para que desaparezca al instante visualmente
+            if (spriteRenderer != null) spriteRenderer.enabled = false;
+            if (colisionador != null) colisionador.enabled = false;
+            if (rb2d != null)
+            {
+                rb2d.linearVelocity = Vector2.zero;
+                rb2d.simulated = false;
+            }
+
+            estaActiva = false;
+            hayAlgunaPilaActiva = false;
+            transform.position = new Vector3(0f, -999f, 0f);
+
+            // 2. Aplicamos la lógica de la batería de forma inmediata
             if (sub.bateriaActual <= 80f)
             {
                 if (esPilaRoja)
                 {
                     sub.bateriaActual -= puntosRecarga;
-                    if (sub.bateriaActual < 0f) sub.bateriaActual = 0f; // Evitar valores negativos extremos
+                    if (sub.bateriaActual < 0f) sub.bateriaActual = 0f;
                 }
                 else
                 {
                     sub.bateriaActual += puntosRecarga;
                     if (sub.bateriaActual > 100f) sub.bateriaActual = 100f;
                 }
-
-                OcultarPila();
-                temporizadorAparicion = intervaloAparicion;
             }
+
+            turnoPilaRoja = !turnoPilaRoja;
+            temporizadorAparicion = intervaloAparicion;
         }
     }
 }

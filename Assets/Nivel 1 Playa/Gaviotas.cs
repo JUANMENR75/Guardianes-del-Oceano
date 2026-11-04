@@ -11,22 +11,52 @@ public class Gaviotas : MonoBehaviour
 
     private RectTransform rectTransform;
     private Canvas canvasPadre;
+    private AudioSource audioSourceGaviota;
 
     void Start()
     {
         rectTransform = GetComponent<RectTransform>();
         canvasPadre = GetComponentInParent<Canvas>();
+
+        // Configurar y reproducir el sonido ambiental en bucle para esta gaviota
+        audioSourceGaviota = GetComponent<AudioSource>();
+        if (audioSourceGaviota == null)
+        {
+            audioSourceGaviota = gameObject.AddComponent<AudioSource>();
+        }
+
+        if (ControladorSonidoPlaya.Instance != null && ControladorSonidoPlaya.Instance.sonidoGaviota != null)
+        {
+            audioSourceGaviota.clip = ControladorSonidoPlaya.Instance.sonidoGaviota;
+            audioSourceGaviota.loop = true; // Sonido constante ambiental
+            audioSourceGaviota.Play();
+        }
     }
 
     void Update()
     {
         if (canvasPadre == null) return;
 
-        // Si el juego terminó (por ejemplo, si el panel de Game Over está activo), la gaviota se detiene
+        // Si el juego terminó (Panel de Game Over o Panel de Victoria activos), la gaviota y su sonido se pausan
         GameObject panelGameOver = GameObject.Find("PanelGameOver");
-        if (panelGameOver != null && panelGameOver.activeSelf)
+        GameObject panelVictoria = GameObject.Find("PanelVictoria");
+
+        bool juegoTerminado = (panelGameOver != null && panelGameOver.activeSelf) ||
+                              (panelVictoria != null && panelVictoria.activeSelf);
+
+        if (juegoTerminado)
         {
+            if (audioSourceGaviota != null && audioSourceGaviota.isPlaying)
+            {
+                audioSourceGaviota.Pause();
+            }
             return; // Detiene el movimiento de la gaviota
+        }
+
+        // Si el audio estaba pausado y el juego continúa, lo reanudamos
+        if (audioSourceGaviota != null && !audioSourceGaviota.isPlaying)
+        {
+            audioSourceGaviota.UnPause();
         }
 
         // 1. Mover la gaviota hacia la izquierda continuamente usando píxeles de UI

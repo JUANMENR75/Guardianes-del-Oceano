@@ -1,6 +1,8 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
 
 public class GestorBasura : MonoBehaviour
 {
@@ -8,15 +10,19 @@ public class GestorBasura : MonoBehaviour
     public GameObject[] listaDeBasura;
 
     [Header("Configuración de Tiempos y Velocidad")]
-    public float intervaloAparicion = 3f;
+    public float intervaloAparicion = 2f;
     public float velocidadCaida = 1f;
-    public float tiempoMaximoVida = 8f;
+    public float tiempoMaximoVida = 10f;
+
+    [Header("Retraso entre cada basura del grupo")]
+    public float retrasoEntreBasuras = 0.4f; // Milisegundos/segundos de diferencia entre la aparición de una y otra
+
+    [Header("Cantidad de Basura Simultánea")]
+    [Range(2, 3)] public int cantidadBasuraSimultanea = 2; // Cantidad de basuras juntas (2 o 3)
 
     private float temporizadorAparicion;
     private float temporizadorVida;
-    private GameObject basuraActualEnEscena;
-    private int puntosAleatoriosObjeto = 0;
-    private Vector2 direccionBasura;
+    private List<GameObject> basurasActivasEnEscena = new List<GameObject>();
 
     [Header("Límites Estrictos de la Pantalla")]
     public float limiteDerecha = 8.5f;
@@ -29,7 +35,7 @@ public class GestorBasura : MonoBehaviour
     public TextMeshProUGUI textoBasuraUI;
 
     [Header("Panel de Victoria")]
-    public GameObject panelVictoria;        // Arrastra aquí tu PanelVictoria del Canvas
+    public GameObject panelVictoria;
 
     public static int puntosTotalesJuego = 0;
     public static int cantidadBasuraTotal = 0;
@@ -41,7 +47,7 @@ public class GestorBasura : MonoBehaviour
         submarino = FindAnyObjectByType<MovimientoSubmarino>();
         OcultarTodaLaBasura();
 
-        if (panelVictoria != null) panelVictoria.SetActive(false); // Ocultar al iniciar
+        if (panelVictoria != null) panelVictoria.SetActive(false);
 
         temporizadorAparicion = intervaloAparicion;
         puntosTotalesJuego = 0;
@@ -54,39 +60,32 @@ public class GestorBasura : MonoBehaviour
 
         if (submarino.bateriaActual <= 97f)
         {
-            if (basuraActualEnEscena == null)
+            if (basurasActivasEnEscena.Count == 0)
             {
                 temporizadorAparicion -= Time.deltaTime;
                 if (temporizadorAparicion <= 0f)
                 {
-                    AparecerBasura();
+                    StartCoroutine(AparecerGrupoBasuraCorrutina());
                 }
             }
             else
             {
-                basuraActualEnEscena.transform.Translate(direccionBasura * velocidadCaida * Time.deltaTime);
-
-                Vector3 pos = basuraActualEnEscena.transform.position;
-
-                if (pos.x <= limiteIzquierda || pos.x >= limiteDerecha)
+                // Mueve todas las basuras activas hacia abajo
+                for (int i = 0; i < basurasActivasEnEscena.Count; i++)
                 {
-                    direccionBasura.x = -direccionBasura.x;
-                    pos.x = Mathf.Clamp(pos.x, limiteIzquierda, limiteDerecha);
-                }
+                    GameObject basura = basurasActivasEnEscena[i];
+                    if (basura != null && basura.activeSelf)
+                    {
+                        basura.transform.Translate(Vector3.down * velocidadCaida * Time.deltaTime);
 
-                if (pos.y >= limiteArriba)
-                {
-                    direccionBasura.y = -direccionBasura.y;
-                    pos.y = Mathf.Clamp(pos.y, limiteAbajo, limiteArriba);
+                        Vector3 pos = basura.transform.position;
+                        if (pos.y <= limiteAbajo)
+                        {
+                            pos.y = limiteAbajo;
+                            basura.transform.position = pos;
+                        }
+                    }
                 }
-
-                if (pos.y <= limiteAbajo)
-                {
-                    pos.y = limiteAbajo;
-                    direccionBasura = Vector2.zero;
-                }
-
-                basuraActualEnEscena.transform.position = pos;
 
                 temporizadorVida -= Time.deltaTime;
                 if (temporizadorVida <= 0f)
@@ -103,42 +102,71 @@ public class GestorBasura : MonoBehaviour
         }
     }
 
-    void AparecerBasura()
+    IEnumerator AparecerGrupoBasuraCorrutina()
     {
-        if (listaDeBasura.Length == 0) return;
+        if (listaDeBasura.Length == 0) yield break;
 
-        int indiceAleatorio = Random.Range(0, listaDeBasura.Length);
-        basuraActualEnEscena = listaDeBasura[indiceAleatorio];
+        basurasActivasEnEscena.Clear();
+        int cantidadAGenerar = Mathf.Clamp(cantidadBasuraSimultanea, 1, listaDeBasura.Length);
 
-        if (basuraActualEnEscena != null)
+        // Lista temporal para escoger basuras únicas sin repetir en este grupo
+        List<GameObject> disponibles = new List<GameObject>(listaDeBasura);
+
+        // Dividimos el espacio horizontal estrictamente dentro de los límites para garantizar separación
+        float margenSeguro = 1f;
+        float anchoUtil = (limiteDerecha - margenSeguro) - (limiteIzquierda + margenSeguro);
+        float tamSeccion = anchoUtil / cantidadAGenerar;
+
+        for (int i = 0; i < cantidadAGenerar; i++)
         {
-            float randomX = Random.Range(limiteIzquierda + 1f, limiteDerecha - 1f);
-            basuraActualEnEscena.transform.position = new Vector3(randomX, limiteArriba, 0f);
+            if (disponibles.Count == 0) break;
 
-            direccionBasura = new Vector2(Random.Range(-0.3f, 0.3f), -1f).normalized;
+            int indiceAleatorio = Random.Range(0, disponibles.Count);
+            GameObject basuraElegida = disponibles[indiceAleatorio];
+            disponibles.RemoveAt(indiceAleatorio); // Evita que se repita en este mismo grupo
 
-            SpriteRenderer sr = basuraActualEnEscena.GetComponent<SpriteRenderer>();
-            Collider2D col = basuraActualEnEscena.GetComponent<Collider2D>();
-
-            if (sr != null) sr.enabled = true;
-            if (col != null) col.enabled = true;
-
-            // PUNTUACIÓN ALEATORIA ENTRE 1 Y 5 (El límite superior en Random.Range es exclusivo, por eso se pone 6)
-            puntosAleatoriosObjeto = Random.Range(1, 5);
-
-            DetectarToqueBasura detector = basuraActualEnEscena.GetComponent<DetectarToqueBasura>();
-            if (detector == null)
+            if (basuraElegida != null)
             {
-                detector = basuraActualEnEscena.AddComponent<DetectarToqueBasura>();
-            }
-            detector.gestor = this;
-            detector.puntosOtorgados = puntosAleatoriosObjeto;
+                // Asignamos una sección específica a cada pieza para que aparezcan separadas horizontalmente
+                float minX = (limiteIzquierda + margenSeguro) + (i * tamSeccion);
+                float maxX = minX + tamSeccion;
+                float posX = Random.Range(minX + 0.2f, maxX - 0.2f);
 
-            temporizadorVida = tiempoMaximoVida;
+                // Control estricto para que jamás rebase los límites del submarino
+                posX = Mathf.Clamp(posX, limiteIzquierda + 0.5f, limiteDerecha - 0.5f);
+
+                basuraElegida.transform.position = new Vector3(posX, limiteArriba, 0f);
+
+                SpriteRenderer sr = basuraElegida.GetComponent<SpriteRenderer>();
+                Collider2D col = basuraElegida.GetComponent<Collider2D>();
+
+                if (sr != null) sr.enabled = true;
+                if (col != null) col.enabled = true;
+
+                int puntosAleatorios = Random.Range(1, 5);
+
+                DetectarToqueBasura detector = basuraElegida.GetComponent<DetectarToqueBasura>();
+                if (detector == null)
+                {
+                    detector = basuraElegida.AddComponent<DetectarToqueBasura>();
+                }
+                detector.gestor = this;
+                detector.puntosOtorgados = puntosAleatorios;
+
+                basurasActivasEnEscena.Add(basuraElegida);
+            }
+
+            // Esperar unos instantes antes de hacer aparecer la siguiente basura del grupo
+            if (i < cantidadAGenerar - 1)
+            {
+                yield return new WaitForSeconds(retrasoEntreBasuras);
+            }
         }
+
+        temporizadorVida = tiempoMaximoVida;
     }
 
-    public void RecogerBasura(int puntos)
+    public void RecogerBasura(GameObject basuraRecogida, int puntos)
     {
         cantidadBasuraTotal++;
         puntosTotalesJuego += puntos;
@@ -158,23 +186,31 @@ public class GestorBasura : MonoBehaviour
         if (textoPuntosUI != null) textoPuntosUI.text = puntosTotalesJuego.ToString();
         if (textoBasuraUI != null) textoBasuraUI.text = cantidadBasuraTotal.ToString();
 
-        // CONDICIÓN DE VICTORIA
         if (puntosTotalesJuego >= 100)
         {
             puntosTotalesJuego = 100;
             if (textoPuntosUI != null) textoPuntosUI.text = "100";
 
-            Debug.Log("¡Victoria alcanzada!");
-
             if (panelVictoria != null)
             {
                 panelVictoria.SetActive(true);
-                Time.timeScale = 0f; // Pausa el juego
+                Time.timeScale = 0f;
             }
         }
 
-        OcultarTodaLaBasura();
-        temporizadorAparicion = intervaloAparicion;
+        // Ocultar solo la basura que se recolectó
+        SpriteRenderer sr = basuraRecogida.GetComponent<SpriteRenderer>();
+        Collider2D col = basuraRecogida.GetComponent<Collider2D>();
+        if (sr != null) sr.enabled = false;
+        if (col != null) col.enabled = false;
+
+        basurasActivasEnEscena.Remove(basuraRecogida);
+
+        // Si ya se recogieron todas las del grupo actual, se prepara el siguiente ciclo
+        if (basurasActivasEnEscena.Count == 0)
+        {
+            temporizadorAparicion = intervaloAparicion;
+        }
     }
 
     void OcultarTodaLaBasura()
@@ -192,6 +228,6 @@ public class GestorBasura : MonoBehaviour
                 }
             }
         }
-        basuraActualEnEscena = null;
+        basurasActivasEnEscena.Clear();
     }
 }

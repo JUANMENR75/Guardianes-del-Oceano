@@ -1352,7 +1352,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 12.78, y: 12.3}
+  m_Size: {x: 7, y: 10}
   m_EdgeRadius: 0
 --- !u!212 &636594685
 SpriteRenderer:
@@ -1403,7 +1403,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: bed872ff7400512468486b837db4460c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: da53348e881b64b4580ad04d9449e303, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1444,7 +1444,7 @@ MonoBehaviour:
   esPilaRoja: 0
   intervaloAparicion: 15
   tiempoEnPantalla: 6
-  velocidadCaida: 0.8
+  velocidadCaida: 1
   limiteDerecha: 8.5
   limiteIzquierda: -8.5
   limiteArriba: 4.3
@@ -1510,7 +1510,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.10861254, y: -0.05323124}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1520,7 +1520,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 12.78, y: 12.3}
+  m_Size: {x: 7.265559, y: 10.211721}
   m_EdgeRadius: 0
 --- !u!1 &661120517
 GameObject:
@@ -3314,6 +3314,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1735182221}
   - component: {fileID: 1735182220}
+  - component: {fileID: 1735182222}
   m_Layer: 0
   m_Name: FondoNivel3
   m_TagString: Untagged
@@ -3329,7 +3330,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1735182219}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 98f82538385db8c4a88620bc4b957400, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 34afd626be398e246b4e5a31b41ab910, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 917150402}
@@ -3343,15 +3344,13 @@ VideoPlayer:
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
-  m_TargetAudioSources:
-  - {fileID: 0}
-  m_DirectAudioVolumes:
-  - 1
+  m_TargetAudioSources: []
+  m_DirectAudioVolumes: []
   m_Url: 
-  m_EnabledAudioTracks: 01
-  m_DirectAudioMutes: 00
-  m_ControlledAudioTrackCount: 1
-  m_PlayOnAwake: 1
+  m_EnabledAudioTracks: 
+  m_DirectAudioMutes: 
+  m_ControlledAudioTrackCount: 0
+  m_PlayOnAwake: 0
   m_SkipOnDrop: 1
   m_Looping: 1
   m_WaitForFirstFrame: 1
@@ -3372,6 +3371,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1735182222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1735182219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5237ecac13a5f64db1f29368e960cc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FondoVideoControl
 --- !u!1 &1805977409
 GameObject:
   m_ObjectHideFlags: 0
@@ -3551,6 +3562,7 @@ MonoBehaviour:
   intervaloAparicion: 3
   velocidadCaida: 1.5
   tiempoMaximoVida: 6
+  cantidadBasuraSimultanea: 2
   limiteDerecha: 8.5
   limiteIzquierda: -8.5
   limiteArriba: 4.3
@@ -4097,7 +4109,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.06723547, y: -0.055170298}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -4107,7 +4119,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 12.78, y: 12.3}
+  m_Size: {x: 6.898329, y: 9.915615}
   m_EdgeRadius: 0
 --- !u!114 &2136598938
 MonoBehaviour:
@@ -4125,7 +4137,7 @@ MonoBehaviour:
   esPilaRoja: 1
   intervaloAparicion: 15
   tiempoEnPantalla: 6
-  velocidadCaida: 0.8
+  velocidadCaida: 1
   limiteDerecha: 8.5
   limiteIzquierda: -8.5
   limiteArriba: 4.3
@@ -4201,7 +4213,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 12.78, y: 12.3}
+  m_Size: {x: 7, y: 10}
   m_EdgeRadius: 0
 --- !u!212 &2136598941
 SpriteRenderer:
@@ -4271,7 +4283,7 @@ Transform:
   m_GameObject: {fileID: 2136598936}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.15247747, w: 0.98830694}
-  m_LocalPosition: {x: 3.2, y: 0.95, z: 0}
+  m_LocalPosition: {x: -6.41, y: -1.88, z: 0}
   m_LocalScale: {x: 0.105857655, y: 0.105857655, z: 0.105857655}
   m_ConstrainProportionsScale: 0
   m_Children: []

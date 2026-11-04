@@ -10,7 +10,7 @@ public class DetectarToqueBasura : MonoBehaviour
         MovimientoSubmarino sub = otro.GetComponent<MovimientoSubmarino>();
         if (sub != null && gestor != null)
         {
-            gestor.RecogerBasura(puntosOtorgados);
+            gestor.RecogerBasura(gameObject, puntosOtorgados);
         }
     }
 }

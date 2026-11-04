@@ -45,6 +45,15 @@ public class MovimientoPersonaje : MonoBehaviour
             colisionadorPinza.enabled = Input.GetKey(KeyCode.Space);
         }
 
+        // --- NUEVO: Reproducir sonido de la pinza al presionar espacio por primera vez o al estirar ---
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (ControladorSonidoPlaya.Instance != null)
+            {
+                ControladorSonidoPlaya.Instance.ReproducirSonidoPinza();
+            }
+        }
+
         // 2. Si presionamos espacio y tenemos basura detectada en la pinza, la recogemos
         if (Input.GetKey(KeyCode.Space) && basuraDetectada != null && !tieneBasura)
         {
