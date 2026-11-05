@@ -30,20 +30,18 @@ public class ControladorGameOverUI : MonoBehaviour
             panelVictoria.SetActive(true);
         }
 
-        // --- NUEVO: Pausar todo el audio al ganar ---
         if (ControladorSonidoPlaya.Instance != null)
         {
             ControladorSonidoPlaya.Instance.PausarTodoElAudio();
         }
 
-        // Destruye la basura por componente
-        ObjetoBasura[] basurasPorScript = Object.FindObjectsByType<ObjetoBasura>(FindObjectsSortMode.None);
+        // Limpieza actualizada sin advertencias
+        ObjetoBasura[] basurasPorScript = Object.FindObjectsByType<ObjetoBasura>(FindObjectsInactive.Exclude);
         foreach (ObjetoBasura b in basurasPorScript)
         {
             if (b != null) Destroy(b.gameObject);
         }
 
-        // Destruye objetos por etiquetas de clasificación
         string[] tagsBasura = { "Inorganico", "NoReciclable", "Organico", "Basura" };
         foreach (string t in tagsBasura)
         {
@@ -54,8 +52,7 @@ public class ControladorGameOverUI : MonoBehaviour
             }
         }
 
-        // Destruye cualquier residuo restante por nombre en la escena
-        GameObject[] todosLosObjetos = Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+        GameObject[] todosLosObjetos = Object.FindObjectsByType<GameObject>(FindObjectsInactive.Exclude);
         foreach (GameObject obj in todosLosObjetos)
         {
             if (obj != null)
@@ -71,7 +68,6 @@ public class ControladorGameOverUI : MonoBehaviour
             }
         }
 
-        // Apaga el generador de basura
         GameObject generador = GameObject.Find("GeneradorBasura");
         if (generador != null)
         {

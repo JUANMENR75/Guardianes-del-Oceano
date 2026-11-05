@@ -71,10 +71,7 @@ public class ControladorTiempo : MonoBehaviour
 
     void ActivarVictoriaCompleta()
     {
-        Debug.Log("¡Misión cumplida! Limpiando toda la basura y mostrando Panel de Victoria.");
-
-        // 1. DESTRUIR ABSOLUTAMENTE TODA LA BASURA EN PANTALLA
-        ObjetoBasura[] basurasPorScript = Object.FindObjectsByType<ObjetoBasura>(FindObjectsSortMode.None);
+        ObjetoBasura[] basurasPorScript = Object.FindObjectsByType<ObjetoBasura>(FindObjectsInactive.Exclude);
         foreach (ObjetoBasura b in basurasPorScript)
         {
             if (b != null)
@@ -102,14 +99,12 @@ public class ControladorTiempo : MonoBehaviour
             generador.gameObject.SetActive(false);
         }
 
-        // 2. CONGELAR Y ASEGURAR QUE LA BARRA VERDE SE QUEDE EN SU VALOR ACTUAL
         if (barraVerdeImg != null)
         {
             barraVerdeImg.fillAmount = tiempoRestante / tiempoMaximo;
             barraVerdeImg.gameObject.SetActive(true);
         }
 
-        // 3. Activar el panel visual de victoria
         if (panelVictoria != null)
         {
             panelVictoria.SetActive(true);
@@ -138,8 +133,6 @@ public class ControladorTiempo : MonoBehaviour
 
     void ActivarGameOver()
     {
-        Debug.Log("¡Se acabó el tiempo! Mostrando Game Over.");
-
         if (panelGameOver != null)
         {
             panelGameOver.SetActive(true);
