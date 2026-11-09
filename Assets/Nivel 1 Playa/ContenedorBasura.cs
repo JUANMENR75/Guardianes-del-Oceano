@@ -14,9 +14,6 @@ public class ContenedorBasura : MonoBehaviour
 
     void Start()
     {
-        totalBasuraReciclada = 0;
-        totalPuntos = 0;
-
         GameObject objBasura = GameObject.Find("BarraAzulBasura");
         if (objBasura != null) barraBasuraGlobal = objBasura.GetComponent<Image>();
 
@@ -40,6 +37,12 @@ public class ContenedorBasura : MonoBehaviour
 
             basura.DepositerEnContenedorLocal();
             ActualizarBarraVisualDirecta();
+
+            // Llama al sonido de depósito sin afectar la música de fondo
+            if (ControladorSonidoPlaya.Instance != null)
+            {
+                ControladorSonidoPlaya.Instance.ReproducirSonidoDepositar();
+            }
 
             Debug.Log($"¡Depósito correcto! Basura: {totalBasuraReciclada} | Puntos: {totalPuntos}");
         }

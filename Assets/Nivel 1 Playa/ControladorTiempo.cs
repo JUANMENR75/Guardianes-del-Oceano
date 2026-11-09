@@ -128,7 +128,27 @@ public class ControladorTiempo : MonoBehaviour
         if (textoBasuraVictoria != null) textoBasuraVictoria.text = "BASURA\n" + basuraFinal;
         if (textoPuntosVictoria != null) textoPuntosVictoria.text = "PUNTOS\n" + puntosFinal;
 
+        if (ControladorSonidoPlaya.Instance != null)
+        {
+            StartCoroutine(ReproducirVictoriaConRetraso(0.25f));
+        }
+
         Time.timeScale = 0f;
+    }
+
+    private System.Collections.IEnumerator ReproducirVictoriaConRetraso(float retraso)
+    {
+        float tiempo = 0f;
+        while (tiempo < retraso)
+        {
+            tiempo += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        if (ControladorSonidoPlaya.Instance != null)
+        {
+            ControladorSonidoPlaya.Instance.ActivarSonidoVictoria();
+        }
     }
 
     void ActivarGameOver()
@@ -155,6 +175,11 @@ public class ControladorTiempo : MonoBehaviour
 
         if (textoBasuraTotal != null) textoBasuraTotal.text = "BASURA\n" + basuraFinal;
         if (textoPuntosTotal != null) textoPuntosTotal.text = "PUNTOS\n" + puntosFinal;
+
+        if (ControladorSonidoPlaya.Instance != null)
+        {
+            ControladorSonidoPlaya.Instance.ActivarSonidoGameOver();
+        }
 
         Time.timeScale = 0f;
     }

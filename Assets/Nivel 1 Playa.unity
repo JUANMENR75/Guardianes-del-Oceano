@@ -3383,6 +3383,8 @@ GameObject:
   - component: {fileID: 1238465481}
   - component: {fileID: 1238465480}
   - component: {fileID: 1238465479}
+  - component: {fileID: 1238465482}
+  - component: {fileID: 1238465483}
   - component: {fileID: 1238465478}
   m_Layer: 0
   m_Name: ControladorSonido
@@ -3405,9 +3407,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ControladorSonidoPlaya
   audioSourceMusica: {fileID: 1238465480}
   audioSourceEfectos: {fileID: 1238465479}
+  audioSourceCaminar: {fileID: 1238465482}
+  audioSourceDepositar: {fileID: 1238465483}
   musicaFondo: {fileID: 8300000, guid: f345788ee1e87b94380e9cde496d478d, type: 3}
   sonidoPinza: {fileID: 8300000, guid: 25258b6ac516eef44ba88a23b0c89c8a, type: 3}
-  sonidoGaviota: {fileID: 8300000, guid: a38154d4f14485d41b754f6d0b8646c5, type: 3}
+  sonidoGaviota: {fileID: 8300000, guid: 7e01edb686cb7914da4b66e70509ab2b, type: 3}
+  clipCaminar: {fileID: 8300000, guid: 4a954b2954003dc4b82d1126ac592a51, type: 3}
+  clipDepositar: {fileID: 8300000, guid: 431e86a86f2873d42b3525179fd1a98b, type: 3}
+  clipGameOver: {fileID: 8300000, guid: c4ec67ba7d6390743a473c25521c4b31, type: 3}
+  clipVictoria: {fileID: 8300000, guid: 2ffd5b8cd61b3094aa5e21425fb970eb, type: 3}
 --- !u!82 &1238465479
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3617,6 +3625,200 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1238465482
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238465477}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &1238465483
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238465477}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1274886329
 GameObject:
   m_ObjectHideFlags: 0
@@ -5017,12 +5219,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e89090d8d0a6b9648b8b5ac9603c5aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControladorTiempo
-  tiempoMaximo: 90
+  tiempoMaximo: 100
   panelGameOver: {fileID: 121851058}
   textoBasuraTotal: {fileID: 0}
   textoPuntosTotal: {fileID: 0}
   panelVictoria: {fileID: 1422607775}
-  metaBasuraVictoria: 30
+  metaBasuraVictoria: 35
   textoBasuraVictoria: {fileID: 0}
   textoPuntosVictoria: {fileID: 0}
 --- !u!1 &1555798726

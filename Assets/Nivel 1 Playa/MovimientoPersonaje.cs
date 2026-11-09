@@ -8,6 +8,7 @@ public class MovimientoPersonaje : MonoBehaviour
     private Animator anim;
     private Vector2 movimiento;
     private CircleCollider2D colisionadorPinza;
+    private SpriteRenderer spriteRenderer; // <-- Variable para el giro
 
     [Header("Límites de la Arena")]
     public float minX = -7.8f;
@@ -28,6 +29,7 @@ public class MovimientoPersonaje : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         colisionadorPinza = GetComponent<CircleCollider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>(); // <-- Inicializamos el SpriteRenderer
 
         if (rb != null)
         {
@@ -38,14 +40,12 @@ public class MovimientoPersonaje : MonoBehaviour
 
     void Update()
     {
-        // 1. Control automático del colisionador de la pinza:
-        // Solo se enciende al mantener presionada la barra espaciadora para evitar capturas anticipadas.
         if (colisionadorPinza != null)
         {
             colisionadorPinza.enabled = Input.GetKey(KeyCode.Space);
         }
 
-        // --- NUEVO: Reproducir sonido de la pinza al presionar espacio por primera vez o al estirar ---
+        // Sonido de la pinza al presionar espacio
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (ControladorSonidoPlaya.Instance != null)
@@ -54,18 +54,23 @@ public class MovimientoPersonaje : MonoBehaviour
             }
         }
 
-        // 2. Si presionamos espacio y tenemos basura detectada en la pinza, la recogemos
+        // RECOGER BASURA
         if (Input.GetKey(KeyCode.Space) && basuraDetectada != null && !tieneBasura)
         {
             RecogerBasura();
         }
 
-        // 3. Control de Animaciones (Pinza, Caminando, Quieto)
+        // Control de Animaciones y Sonido de Caminata
         if (Input.GetKey(KeyCode.Space))
         {
             anim.SetBool("pinza", true);
             anim.SetBool("caminando", false);
-            movimiento = Vector2.zero; // Se detiene al usar la pinza para atrapar
+            movimiento = Vector2.zero;
+
+            if (ControladorSonidoPlaya.Instance != null)
+            {
+                ControladorSonidoPlaya.Instance.ControlarCaminata(false);
+            }
         }
         else
         {
@@ -75,31 +80,45 @@ public class MovimientoPersonaje : MonoBehaviour
             float moverY = Input.GetAxisRaw("Vertical");
             movimiento = new Vector2(moverX, moverY).normalized;
 
+            // --- VOLTEAR AL PERSONAJE AL ESTILO MARIO ---
+            if (moverX > 0)
+            {
+                if (spriteRenderer != null) spriteRenderer.flipX = false; // Ve a la derecha
+            }
+            else if (moverX < 0)
+            {
+                if (spriteRenderer != null) spriteRenderer.flipX = true;  // Ve a la izquierda
+            }
+
             if (moverX != 0 || moverY != 0)
             {
                 anim.SetBool("caminando", true);
+                if (ControladorSonidoPlaya.Instance != null)
+                {
+                    ControladorSonidoPlaya.Instance.ControlarCaminata(true);
+                }
             }
             else
             {
                 anim.SetBool("caminando", false);
+                if (ControladorSonidoPlaya.Instance != null)
+                {
+                    ControladorSonidoPlaya.Instance.ControlarCaminata(false);
+                }
             }
         }
     }
 
     void FixedUpdate()
     {
-        // 4. Movimiento físico respetando los límites de la arena
         if (rb != null)
         {
             Vector2 nuevaPosicion = rb.position + movimiento * velocidad * Time.fixedDeltaTime;
-
             nuevaPosicion.x = Mathf.Clamp(nuevaPosicion.x, minX, maxX);
             nuevaPosicion.y = Mathf.Clamp(nuevaPosicion.y, minY, maxY);
-
             rb.MovePosition(nuevaPosicion);
         }
 
-        // 5. BLOQUEO ABSOLUTO DE ESCALA: Mantiene siempre el tamaño exacto sin alterarse
         transform.localScale = escalaUnica;
     }
 
@@ -108,27 +127,21 @@ public class MovimientoPersonaje : MonoBehaviour
         tieneBasura = true;
         basuraEnMano = basuraDetectada;
 
-        // Desactivar físicas de la basura para que viaje con el personaje sin caerse
         Rigidbody2D rbBasura = basuraEnMano.GetComponent<Rigidbody2D>();
         if (rbBasura != null) rbBasura.simulated = false;
 
-        // La basura se vuelve hija del personaje para transportarla frente a la pinza
         basuraEnMano.transform.SetParent(transform);
-        basuraEnMano.transform.localPosition = new Vector3(1.2f, 0f, 0f); // Posición al frente en la mano
-
+        basuraEnMano.transform.localPosition = new Vector3(1.2f, 0f, 0f);
         Debug.Log("¡Basura recogida con la pinza!");
     }
 
-    // Detección mediante Triggers
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // 1. Detectar la basura cercana cuando la pinza está activa
-        if ((collision.CompareTag("Basura")|| collision.CompareTag("Organico") || collision.CompareTag("Inorganico") || collision.CompareTag("NoReciclable")) && !tieneBasura)
+        if ((collision.CompareTag("Basura") || collision.CompareTag("Organico") || collision.CompareTag("Inorganico") || collision.CompareTag("NoReciclable")) && !tieneBasura)
         {
             basuraDetectada = collision.gameObject;
         }
 
-        // 2. Depositar la basura al tocar el contenedor correcto
         if (collision.CompareTag("Contenedor") && tieneBasura && basuraEnMano != null)
         {
             ContenedorBasura contenedor = collision.GetComponent<ContenedorBasura>();
@@ -141,22 +154,19 @@ public class MovimientoPersonaje : MonoBehaviour
 
                 if (tipoBasuraLimpio == tipoAceptadoLimpio)
                 {
-                    // ¡Contenedor correcto! Sumamos puntos y destruimos la basura
                     ContenedorBasura.totalBasuraReciclada++;
                     ContenedorBasura.totalPuntos += 10;
 
-                    objBasura.DepositerEnContenedorLocal(); // Destruye la basura
+                    objBasura.DepositerEnContenedorLocal();
 
-                    Debug.Log("¡Depósito correcto en el contenedor!");
+                    if (ControladorSonidoPlaya.Instance != null)
+                    {
+                        ControladorSonidoPlaya.Instance.ReproducirSonidoDepositar();
+                    }
 
-                    // Reiniciar estados para permitir recoger más basura
                     tieneBasura = false;
                     basuraDetectada = null;
                     basuraEnMano = null;
-                }
-                else
-                {
-                    Debug.Log("¡Contenedor incorrecto! Este contenedor es para: " + contenedor.tipoBasuraAceptada);
                 }
             }
         }
