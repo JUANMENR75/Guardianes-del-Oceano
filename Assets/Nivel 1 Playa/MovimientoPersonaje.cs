@@ -8,7 +8,7 @@ public class MovimientoPersonaje : MonoBehaviour
     private Animator anim;
     private Vector2 movimiento;
     private CircleCollider2D colisionadorPinza;
-    private SpriteRenderer spriteRenderer; // <-- Variable para el giro
+    private SpriteRenderer spriteRenderer;
 
     [Header("Límites de la Arena")]
     public float minX = -7.8f;
@@ -24,12 +24,20 @@ public class MovimientoPersonaje : MonoBehaviour
     private GameObject basuraEnMano = null;
     private bool tieneBasura = false;
 
+    // Almacenamos la posición original del colisionador de la pinza para alternarla
+    private Vector2 offsetPinzaOriginal;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         colisionadorPinza = GetComponent<CircleCollider2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>(); // <-- Inicializamos el SpriteRenderer
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (colisionadorPinza != null)
+        {
+            offsetPinzaOriginal = colisionadorPinza.offset;
+        }
 
         if (rb != null)
         {
@@ -80,14 +88,24 @@ public class MovimientoPersonaje : MonoBehaviour
             float moverY = Input.GetAxisRaw("Vertical");
             movimiento = new Vector2(moverX, moverY).normalized;
 
-            // --- VOLTEAR AL PERSONAJE AL ESTILO MARIO ---
+            // --- VOLTEAR AL PERSONAJE Y LA PINZA AL ESTILO MARIO ---
             if (moverX > 0)
             {
                 if (spriteRenderer != null) spriteRenderer.flipX = false; // Ve a la derecha
+                if (colisionadorPinza != null)
+                {
+                    // Pinza hacia la derecha (offset positivo)
+                    colisionadorPinza.offset = new Vector2(Mathf.Abs(offsetPinzaOriginal.x), offsetPinzaOriginal.y);
+                }
             }
             else if (moverX < 0)
             {
                 if (spriteRenderer != null) spriteRenderer.flipX = true;  // Ve a la izquierda
+                if (colisionadorPinza != null)
+                {
+                    // Pinza hacia la izquierda (offset negativo para que detecte al voltear)
+                    colisionadorPinza.offset = new Vector2(-Mathf.Abs(offsetPinzaOriginal.x), offsetPinzaOriginal.y);
+                }
             }
 
             if (moverX != 0 || moverY != 0)
@@ -131,7 +149,11 @@ public class MovimientoPersonaje : MonoBehaviour
         if (rbBasura != null) rbBasura.simulated = false;
 
         basuraEnMano.transform.SetParent(transform);
-        basuraEnMano.transform.localPosition = new Vector3(1.2f, 0f, 0f);
+
+        // --- POSICIÓN DINÁMICA DE LA BASURA EN MANO ---
+        float direccionX = (spriteRenderer != null && spriteRenderer.flipX) ? -1.2f : 1.2f;
+        basuraEnMano.transform.localPosition = new Vector3(direccionX, 0f, 0f);
+
         Debug.Log("¡Basura recogida con la pinza!");
     }
 
