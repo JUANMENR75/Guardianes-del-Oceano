@@ -13,12 +13,6 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene("Escenarios");
     }
 
-    // 2. Botón Herramientas
-    public void IrAHerramientas()
-    {
-        SceneManager.LoadScene("Herramientas");
-    }
-
     // 3. Botón Escenarios (Muestra): Entra a escenarios pero APAGA el modo de juego
     public void IrAMuestraEscenarios()
     {
