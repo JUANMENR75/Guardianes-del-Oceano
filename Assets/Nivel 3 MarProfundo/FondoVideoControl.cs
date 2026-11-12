@@ -10,7 +10,8 @@ public class FondoVideoControl : MonoBehaviour
     {
         videoPlayer = GetComponent<VideoPlayer>();
         videoPlayer.playOnAwake = false;
-        videoPlayer.frame = 0; // Se posiciona en el primer fotograma al instante para evitar pantallas negras o retrasos
+        videoPlayer.isLooping = true; // Forzamos el bucle continuo sin cortes
+        videoPlayer.frame = 0;
         videoPlayer.Prepare();
     }
 
@@ -34,6 +35,7 @@ public class FondoVideoControl : MonoBehaviour
         bool juegoTerminado = (panelGameOver != null && panelGameOver.activeSelf) ||
                               (panelVictoria != null && panelVictoria.activeSelf);
 
+        // Solo pausamos si hay pantalla de Game Over o Victoria, de lo contrario dejamos que corra continuo y fluido
         if (juegoTerminado)
         {
             if (videoPlayer.isPlaying) videoPlayer.Pause();
