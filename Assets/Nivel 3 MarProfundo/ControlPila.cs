@@ -36,12 +36,16 @@ public class ControlPila : MonoBehaviour
 
         if (rb2d != null)
         {
-            rb2d.gravityScale = 0f; // Evitamos gravedad extra de Unity
+            rb2d.gravityScale = 0f;
             rb2d.freezeRotation = true;
         }
 
+        // Reiniciar variables estáticas al iniciar o reiniciar el nivel
+        turnoPilaRoja = false;
+        hayAlgunaPilaActiva = false;
+
         OcultarPila();
-        temporizadorAparicion = intervaloAparicion;
+        temporizadorAparicion = 0f; // Aparece de inmediato en cuanto la batería llegue a 80
     }
 
     void Update()
@@ -63,13 +67,11 @@ public class ControlPila : MonoBehaviour
             }
             else
             {
-                // Forzamos el descenso usando el Rigidbody2D
                 if (rb2d != null && rb2d.simulated)
                 {
                     rb2d.linearVelocity = new Vector2(0f, -Mathf.Abs(velocidadCaida));
                 }
 
-                // Control estricto de límites
                 Vector3 pos = transform.position;
                 pos.x = Mathf.Clamp(pos.x, limiteIzquierda, limiteDerecha);
 
@@ -92,7 +94,7 @@ public class ControlPila : MonoBehaviour
         else
         {
             if (estaActiva) OcultarPila();
-            temporizadorAparicion = intervaloAparicion;
+            temporizadorAparicion = 0f;
         }
     }
 
@@ -136,7 +138,6 @@ public class ControlPila : MonoBehaviour
         MovimientoSubmarino sub = otro.GetComponent<MovimientoSubmarino>();
         if (sub != null)
         {
-            // 1. Desactivamos TODO de inmediato al primer toque para que desaparezca al instante visualmente
             if (spriteRenderer != null) spriteRenderer.enabled = false;
             if (colisionador != null) colisionador.enabled = false;
             if (rb2d != null)
@@ -149,7 +150,14 @@ public class ControlPila : MonoBehaviour
             hayAlgunaPilaActiva = false;
             transform.position = new Vector3(0f, -999f, 0f);
 
-            // 2. Aplicamos la lógica de la batería de forma inmediata
+            if (ControladorSonidoMarProfundo.Instance != null)
+            {
+                if (esPilaRoja)
+                    ControladorSonidoMarProfundo.Instance.ReproducirSonidoPilaRoja();
+                else
+                    ControladorSonidoMarProfundo.Instance.ReproducirSonidoPilaVerde();
+            }
+
             if (sub.bateriaActual <= 80f)
             {
                 if (esPilaRoja)

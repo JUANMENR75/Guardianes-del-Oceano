@@ -86,6 +86,11 @@ public class MovimientoSubmarino : MonoBehaviour
             {
                 panelGameOver.SetActive(true);
                 Time.timeScale = 0f;
+
+                if (ControladorSonidoMarProfundo.Instance != null)
+                {
+                    ControladorSonidoMarProfundo.Instance.ActivarSonidoGameOver();
+                }
             }
         }
     }
