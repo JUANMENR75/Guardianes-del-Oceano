@@ -6,25 +6,30 @@ using System.Collections;
 
 public class Monitoreo : MonoBehaviour
 {
-    // 1. Pega aquí tu nueva API Key de 32 caracteres (sin guiones)
     public string apiKey = "49d4c77d419544ddcd4ce1811e51b58f";
-
-    // 2. URL corregida para tu sitio actual (datadoghq.com sin us3)
     public string apiUrl = "https://api.datadoghq.com/api/v2/series";
+
+    private float tiempoAcumulado = 0f;
+    private int framesAcumulados = 0;
+    private const float intervaloEnvioSegundos = 5f;
 
     void Start()
     {
-        // Reportamos que alguien abrió el juego
         StartCoroutine(EnviarMetrica("toxichorizon.sesiones", 1));
     }
 
     void Update()
     {
-        // Monitoreo de rendimiento: Envía los FPS aprox. cada 5 segundos
-        if (Time.frameCount % 300 == 0)
+        tiempoAcumulado += Time.unscaledDeltaTime;
+        framesAcumulados++;
+
+        if (tiempoAcumulado >= intervaloEnvioSegundos)
         {
-            float fps = 1.0f / Time.deltaTime;
-            StartCoroutine(EnviarMetrica("toxichorizon.rendimiento.fps", Mathf.RoundToInt(fps)));
+            float fpsPromedio = framesAcumulados / tiempoAcumulado;
+            StartCoroutine(EnviarMetrica("toxichorizon.rendimiento.fps", Mathf.RoundToInt(fpsPromedio)));
+
+            tiempoAcumulado = 0f;
+            framesAcumulados = 0;
         }
     }
 
@@ -35,6 +40,11 @@ public class Monitoreo : MonoBehaviour
 
     IEnumerator EnviarMetrica(string nombreMetrica, float valor)
     {
+        if (Application.internetReachability == NetworkReachability.NotReachable)
+        {
+            yield break;
+        }
+
         long unixTime = ((DateTimeOffset)DateTime.UtcNow).ToUnixTimeSeconds();
 
         string json = $@"{{
@@ -50,6 +60,7 @@ public class Monitoreo : MonoBehaviour
             byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
             web.uploadHandler = new UploadHandlerRaw(bodyRaw);
             web.downloadHandler = new DownloadHandlerBuffer();
+            web.timeout = 5;
 
             web.SetRequestHeader("Content-Type", "application/json");
             web.SetRequestHeader("DD-API-KEY", apiKey);
@@ -58,7 +69,7 @@ public class Monitoreo : MonoBehaviour
 
             if (web.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[Datadog Error] {web.responseCode}: {web.downloadHandler.text}");
+                Debug.LogWarning($"[Datadog Aviso] {web.responseCode}: {web.error}");
             }
             else
             {

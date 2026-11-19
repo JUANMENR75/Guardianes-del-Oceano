@@ -3466,8 +3466,8 @@ MonoBehaviour:
   audioSourceMusica: {fileID: 1232108625}
   audioSourceEfectos: {fileID: 1232108624}
   musicaFondo: {fileID: 8300000, guid: b7df431d28d0fe64a807356ce8b93fdb, type: 3}
-  clipPilaVerde: {fileID: 0}
-  clipPilaRoja: {fileID: 0}
+  clipPilaVerde: {fileID: 8300000, guid: bfe4466573a6b664dbe065e67173e25f, type: 3}
+  clipPilaRoja: {fileID: 8300000, guid: 2c3a20f349f8245448e55279ab6c73f4, type: 3}
   clipBasura: {fileID: 8300000, guid: d93c742643074164e9dfc7a301d6a503, type: 3}
   clipVictoria: {fileID: 8300000, guid: 2b93b229ffc0229479fa6d35a3806b24, type: 3}
   clipGameOver: {fileID: 8300000, guid: 72f3981e698b5244cacb0a3ccb90e321, type: 3}
