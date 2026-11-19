@@ -42,4 +42,15 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("MenuPrincipal");
     }
+
+    // 6. Salir del juego
+    public void SalirDelJuego()
+    {
+        Debug.Log("Saliendo del juego...");
+        Application.Quit();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+    }
 }

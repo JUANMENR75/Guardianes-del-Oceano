@@ -1,5 +1,4 @@
 using UnityEngine;
-using TMPro;
 using UnityEngine.SceneManagement;
 
 public class SelectorEscenarios : MonoBehaviour
@@ -9,8 +8,10 @@ public class SelectorEscenarios : MonoBehaviour
     public GameObject objetoOceano;
     public GameObject objetoNivel3;
 
-    [Header("El Texto Central de Títulos")]
-    public TextMeshProUGUI textoTitulo;
+    [Header("Los 3 Textos de Títulos")]
+    public GameObject textoPlaya;
+    public GameObject textoMar;
+    public GameObject textoMarProfundo;
 
     private int indiceActual = 0;
     private int totalEscenarios = 3;
@@ -47,39 +48,26 @@ public class SelectorEscenarios : MonoBehaviour
         if (objetoOceano != null) objetoOceano.SetActive(indiceActual == 1);
         if (objetoNivel3 != null) objetoNivel3.SetActive(indiceActual == 2);
 
-        // Actualiza el texto en pantalla según el índice
-        if (textoTitulo != null)
-        {
-            if (indiceActual == 0)
-            {
-                textoTitulo.text = "PLAYA";
-            }
-            else if (indiceActual == 1)
-            {
-                textoTitulo.text = "MAR";
-            }
-            else if (indiceActual == 2)
-            {
-                textoTitulo.text = "NIVEL 3";
-            }
-        }
+        // Activa o desactiva el texto correspondiente a cada imagen
+        if (textoPlaya != null) textoPlaya.SetActive(indiceActual == 0);
+        if (textoMar != null) textoMar.SetActive(indiceActual == 1);
+        if (textoMarProfundo != null) textoMarProfundo.SetActive(indiceActual == 2);
     }
 
-    // Método opcional por si necesitas que el botón de Jugar cargue la escena según el escenario activo
     public void CargarEscenarioSeleccionado()
     {
         Time.timeScale = 1f;
         if (indiceActual == 0)
         {
-            SceneManager.LoadScene("Nivel 1 Playa"); // Cambia por el nombre exacto de tu escena de playa
+            SceneManager.LoadScene("Nivel 1 Playa");
         }
         else if (indiceActual == 1)
         {
-            SceneManager.LoadScene("Nivel 2 Mar"); // Cambia por el nombre exacto de tu escena de mar
+            SceneManager.LoadScene("Nivel 2 Mar");
         }
         else if (indiceActual == 2)
         {
-            SceneManager.LoadScene("Nivel 3 MarProfundo"); // El nombre de tu escena actual
+            SceneManager.LoadScene("Nivel 3 Mar Profundo");
         }
     }
 }
